@@ -12,8 +12,11 @@ class Shaolin(pilas.actores.Actor):
         self.stand = pilas.imagenes.cargar_grilla("data/shaolin/stand.png", 4)
 
     def actualizar(self):
-        if pilas.mundo.control.izquierda:
+        c = pilas.mundo.control
+        if c.izquierda:
             self.espejado = True
+        elif c.derecha:
+            self.espejado = False
 
 if __name__ == '__main__':
     pilas.iniciar()
