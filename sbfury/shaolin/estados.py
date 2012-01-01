@@ -22,7 +22,7 @@ class Parado(Comportamiento):
 
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
-        self.shaolin.cambiar_animacion('stand')
+        self.shaolin.cambiar_animacion('parado')
 
     def actualizar(self):
         if self.control.izquierda or self.control.derecha:
@@ -35,7 +35,7 @@ class Caminar(Comportamiento):
 
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
-        self.shaolin.cambiar_animacion('attack1')
+        self.shaolin.cambiar_animacion('camina')
 
     def actualizar(self):
         x, y = 0, 0
@@ -56,3 +56,5 @@ class Caminar(Comportamiento):
             self.shaolin.hacer(Parado())
         else:
             self.shaolin.mover(x, y)
+
+        self.shaolin.avanzar_animacion(0.2)

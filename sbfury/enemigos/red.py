@@ -6,3 +6,4 @@ class Red(pilas.actores.Actor):
         pilas.actores.Actor.__init__(self, "red/stand.png")
         self.z = 0
         self.centro = ("centro", "abajo")
+        self.x = 200
