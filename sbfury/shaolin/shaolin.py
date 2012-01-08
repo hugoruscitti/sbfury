@@ -9,6 +9,12 @@ class Shaolin(pilas.actores.Actor):
         self.hacer(estados.Parado())
         self.tmp_velocidad_animacion = 0
         pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
+        self.sombra = pilas.actores.Actor("sombra.png")
+        self.sombra.centro = ("centro", "abajo")
+
+    def actualizar(self):
+        pilas.actores.Actor.actualizar(self)
+        self.sombra.x, self.sombra.y = self.x, self.y
 
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla

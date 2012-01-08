@@ -200,6 +200,12 @@ el código simplificado se ve mas o menos así:
             [...]
             self.shaolin.cambiar_animacion('ataca1')
 
+Sombra
+______
+
+La sombra del shaolin es un actor separado, que simplemente se
+instancia junto con el shaolin y se mantiene siempre en la
+misma posición ``x`` e ``y`` del shaolin.
 
 Conclusiones del shaolin
 ________________________
@@ -211,3 +217,7 @@ En resumen, el ``shaolin``:
 
 - Es un gestor de animaciones: carga todas las grillas de cuadros y permite intercambiarlas mediante métodos cómo ``cambiar_animacion`` o ``avanzar_animacion``.
 - Está implementado con estados, y cada uno de ellos se encarga de atender eventos y darle el control a otro estado. Para estos se usa el código ``shaolin.hacer(nuevo_estado)``.
+
+
+
+
