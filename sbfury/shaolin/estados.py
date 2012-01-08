@@ -18,8 +18,6 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         self.control = pilas.mundo.control
 
 class Parado(Comportamiento):
-
-
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('parado')
@@ -32,7 +30,6 @@ class Parado(Comportamiento):
             self.shaolin.hacer(Caminar())
 
 class Caminar(Comportamiento):
-
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('camina')

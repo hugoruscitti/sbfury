@@ -20,4 +20,4 @@ class Escenario:
 
             self.capas.append(capa)
 
-        pilas.mundo.camara.x = [1000], 20
+        #pilas.mundo.camara.x = [1000], 20
