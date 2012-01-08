@@ -108,6 +108,14 @@ class Saltar(Comportamiento):
             self.shaolin.altura_del_salto = 0
             self.shaolin.hacer(Parado())
 
+        if 1 < self.velocidad_inicial:
+            self.shaolin.definir_cuadro(0)
+        elif -5 < self.velocidad_inicial < 1:
+            self.shaolin.definir_cuadro(1)
+        elif self.velocidad_inicial < -5:
+            self.shaolin.definir_cuadro(2)
+
+
 class SaltarCaminando(Saltar):
 
     def __init__(self, direccion):

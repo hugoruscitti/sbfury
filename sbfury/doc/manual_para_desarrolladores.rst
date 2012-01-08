@@ -131,6 +131,10 @@ Igual, este valor de animación lo calculé probando una y otra vez el
 juego ajustando el valor de la velocidad. Comento acá la relación exacta
 que tiene con la velocidad real por si te resulta útil para otros juegos.
 
+Otro motivo de diseño importante, es que cuando uno quiere, puede
+manipular las animaciones por su cuenta, para casos específicos.
+
+
 
 Manejo de teclado
 _________________
