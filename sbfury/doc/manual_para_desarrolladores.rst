@@ -130,3 +130,84 @@ y en este caso daría 12 porque::
 Igual, este valor de animación lo calculé probando una y otra vez el
 juego ajustando el valor de la velocidad. Comento acá la relación exacta
 que tiene con la velocidad real por si te resulta útil para otros juegos.
+
+
+Manejo de teclado
+_________________
+
+El manejo de teclado para controlar al ``shaolin`` está hecho
+de dos formas.
+
+El movimiento para caminar se está haciendo con el objeto ``pilas.control``, porque
+son controles que se pueden mantener presionados mucho tiempo y está bien que
+así sea. Por ejemplo, si se quiere avanzar, se deja pulsado el control hacia
+la derecha y el ``shaolin`` permanecerá caminando.
+
+En cambio, los controles para golpear o saltar están implementados con eventos, en
+la misma clase ``Shaolin``.
+
+Los eventos son distintos porque se disparan una sola vez, cuando se pulsa
+la tecla, y no se suelen repetir con tanta frecuencia. Es similar a cuando
+se está en editor de textos y se deja pulsada una tecla: el editor imprime
+la letra inmediatamente cuando pulsamos la tecla, luego transcurre un segundo
+o un poco mas, y recién luego se produce la repetición de pulsaciones.
+
+
+Para atender los eventos de saltar y golpear se usaron estas lineas de código:
+
+.. code-block:: python
+
+    class Shaolin([...]):
+
+        def __init__(self):
+            pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla
+            [...]
+    
+        def cuando_pulsa_una_tecla(self, evento):
+            if evento.codigo == pilas.simbolos.a:
+                print "pulsa saltar"
+            elif evento.codigo == pilas.simbolos.d:
+                print "pulsa golpear" 
+
+sólo que en lugar de imprimir la frase ``pulsa golpear`` o ``pulsa saltar`` se
+llama a los métodos ``pulsa_saltar`` o ``pulsa_golpear`` en el comportamiento
+actual:
+
+.. code-block:: python
+
+    if evento.codigo == pilas.simbolos.a:
+        self.comportamiento_actual.pulsa_saltar()
+    [...]
+    
+
+Estos eventos, ``pulsa_golpear`` o ``pulsa_saltar`` están definidos en la
+clase ``Comportamiento`` del archivo ``shaolin.estados`` y cualquier estado
+que esté interesado en esos eventos tiene que redefinir esos métodos.
+
+Por ejemplo, el estado parado reacciona cuando se pulsa saltar, así que
+el código simplificado se ve mas o menos así:
+
+.. code-block:: python
+
+    class Parado(Comportamiento):
+
+        def pulsa_golpear(self):
+            self.shaolin.hacer(Golpear())
+
+    class Golpear(Comportamiento):
+
+        def iniciar(self, shaolin):
+            [...]
+            self.shaolin.cambiar_animacion('ataca1')
+
+
+Conclusiones del shaolin
+________________________
+
+Vimos que el ``shaolin`` tiene dos partes muy importantes para analizar
+su comportamiento: animaciones y estados.
+
+En resumen, el ``shaolin``:
+
+- Es un gestor de animaciones: carga todas las grillas de cuadros y permite intercambiarlas mediante métodos cómo ``cambiar_animacion`` o ``avanzar_animacion``.
+- Está implementado con estados, y cada uno de ellos se encarga de atender eventos y darle el control a otro estado. Para estos se usa el código ``shaolin.hacer(nuevo_estado)``.

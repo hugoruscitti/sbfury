@@ -8,6 +8,7 @@ class Shaolin(pilas.actores.Actor):
         pilas.actores.Actor.__init__(self)
         self.hacer(estados.Parado())
         self.tmp_velocidad_animacion = 0
+        pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
 
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla
@@ -52,3 +53,9 @@ class Shaolin(pilas.actores.Actor):
         if self.tmp_velocidad_animacion > 1:
             self.tmp_velocidad_animacion -= 1
             return self.imagen.avanzar()
+
+    def cuando_pulsa_una_tecla(self, evento):
+        if evento.codigo == pilas.simbolos.a:
+            self.comportamiento_actual.pulsa_saltar()
+        elif evento.codigo == pilas.simbolos.d:
+            self.comportamiento_actual.pulsa_golpear()

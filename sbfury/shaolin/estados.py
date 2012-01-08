@@ -17,6 +17,12 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         self.shaolin = shaolin
         self.control = pilas.mundo.control
 
+    def pulsa_saltar(self):
+        pass
+
+    def pulsa_golpear(self):
+        pass
+
 class Parado(Comportamiento):
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
@@ -28,6 +34,9 @@ class Parado(Comportamiento):
 
         if self.control.arriba or self.control.abajo:
             self.shaolin.hacer(Caminar())
+
+    def pulsa_golpear(self):
+        self.shaolin.hacer(Golpear())
 
 class Caminar(Comportamiento):
     def iniciar(self, shaolin):
@@ -55,3 +64,15 @@ class Caminar(Comportamiento):
             self.shaolin.mover(x, y)
 
         self.shaolin.avanzar_animacion(0.2)
+
+
+class Golpear(Comportamiento):
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion('ataca1')
+
+    def actualizar(self):
+        if self.shaolin.avanzar_animacion(0.2):
+            self.shaolin.hacer(Parado())
+
