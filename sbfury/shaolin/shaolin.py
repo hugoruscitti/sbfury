@@ -11,10 +11,24 @@ class Shaolin(pilas.actores.Actor):
         pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
         self.sombra = pilas.actores.Actor("sombra.png")
         self.sombra.centro = ("centro", "abajo")
+        self.altura_del_salto = 0
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
         self.sombra.x, self.sombra.y = self.x, self.y
+        self.sombra.escala = -0.003 * self.altura_del_salto + 1
+
+    def dibujar(self, applicacion):
+        """Redefine la forma de dibujar al actor para que se puede despegar
+        del suelo con un salto o ante una caida."""
+
+        if self.altura_del_salto:
+            self.y += self.altura_del_salto
+
+        pilas.actores.Actor.dibujar(self, applicacion)
+
+        if self.altura_del_salto:
+            self.y -= self.altura_del_salto
 
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla
@@ -25,18 +39,12 @@ class Shaolin(pilas.actores.Actor):
             "ataca2": cargar("shaolin/ataca2.png", 2),
             "ataca3": cargar("shaolin/ataca3.png", 2),
             "ataca4": cargar("shaolin/ataca4.png", 2),
+            "salta": cargar("shaolin/salta.png", 3),
         }
 
     def mover(self, x, y):
         """Hace que el personaje se mueva por el escenario, pero
         prohibiendo movimientos fuera del escenario.
-
-            >>> s = Shaolin()
-            >>> s.x
-            0
-            >>> s.mover(10, 0)
-            >>> s.x
-            10
         """
         self.x += x * 3
         self.y += y * 3
