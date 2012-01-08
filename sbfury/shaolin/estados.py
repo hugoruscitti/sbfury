@@ -24,6 +24,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         pass
 
 class Parado(Comportamiento):
+
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('parado')
@@ -42,6 +43,7 @@ class Parado(Comportamiento):
         self.shaolin.hacer(Saltar())
 
 class Caminar(Comportamiento):
+
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('camina')
@@ -68,6 +70,18 @@ class Caminar(Comportamiento):
 
         self.shaolin.avanzar_animacion(0.2)
 
+    def pulsa_golpear(self):
+        self.shaolin.hacer(Golpear())
+
+    def pulsa_saltar(self):
+        if self.control.izquierda:
+            direccion = -1
+        elif self.control.derecha:
+            direccion = 1
+        else:
+            direccion = 0
+
+        self.shaolin.hacer(SaltarCaminando(direccion))
 
 class Golpear(Comportamiento):
 
@@ -79,18 +93,27 @@ class Golpear(Comportamiento):
         if self.shaolin.avanzar_animacion(0.2):
             self.shaolin.hacer(Parado())
 
-
 class Saltar(Comportamiento):
 
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('salta')
-        self.velocidad_inicial = 16
+        self.velocidad_inicial = 14
 
     def actualizar(self):
         self.shaolin.altura_del_salto += self.velocidad_inicial
-        self.velocidad_inicial -= 1
+        self.velocidad_inicial -= 0.75
 
         if self.shaolin.altura_del_salto < 0:
             self.shaolin.altura_del_salto = 0
             self.shaolin.hacer(Parado())
+
+class SaltarCaminando(Saltar):
+
+    def __init__(self, direccion):
+        self.direccion = direccion
+        Saltar.__init__(self)
+
+    def actualizar(self):
+        Saltar.actualizar(self)
+        self.shaolin.mover(self.direccion * 1.75, 0)
