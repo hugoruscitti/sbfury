@@ -90,7 +90,7 @@ class Golpear(Comportamiento):
         self.shaolin.cambiar_animacion('ataca1')
 
     def actualizar(self):
-        if self.shaolin.avanzar_animacion(0.2):
+        if self.shaolin.avanzar_animacion(0.5):
             self.shaolin.hacer(Parado())
 
 class Saltar(Comportamiento):
@@ -115,6 +115,8 @@ class Saltar(Comportamiento):
         elif self.velocidad_inicial < -5:
             self.shaolin.definir_cuadro(2)
 
+    def pulsa_golpear(self):
+        self.shaolin.hacer(GolpearSaltando(self.velocidad_inicial, 0))
 
 class SaltarCaminando(Saltar):
 
@@ -125,3 +127,31 @@ class SaltarCaminando(Saltar):
     def actualizar(self):
         Saltar.actualizar(self)
         self.shaolin.mover(self.direccion * 1.75, 0)
+
+    def pulsa_golpear(self):
+        self.shaolin.hacer(GolpearSaltando(self.velocidad_inicial, self.direccion))
+
+class GolpearSaltando(Saltar):
+
+    def __init__(self, velocidad_inicial, direccion):
+        self.velocidad_inicial = velocidad_inicial
+        self.direccion = direccion
+        Saltar.__init__(self)
+        self.contador = 0
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion("ataque_aereo")
+
+    def actualizar(self):
+        Saltar.actualizar(self)
+        self.shaolin.mover(self.direccion * 1.75, 0)
+        self.contador += 1
+
+        if self.contador < 10:
+            self.shaolin.definir_cuadro(0)
+        else:
+            self.shaolin.definir_cuadro(1)
+
+    def pulsa_golpear(self):
+        pass

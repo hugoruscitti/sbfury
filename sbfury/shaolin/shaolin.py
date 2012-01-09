@@ -40,6 +40,7 @@ class Shaolin(pilas.actores.Actor):
             "ataca3": cargar("shaolin/ataca3.png", 2),
             "ataca4": cargar("shaolin/ataca4.png", 2),
             "salta": cargar("shaolin/salta.png", 3),
+            "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
         }
 
     def mover(self, x, y):
