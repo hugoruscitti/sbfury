@@ -1,5 +1,6 @@
 import pilas
 import estados
+import sombra
 
 class Shaolin(pilas.actores.Actor):
 
@@ -9,14 +10,14 @@ class Shaolin(pilas.actores.Actor):
         self.hacer(estados.Parado())
         self.tmp_velocidad_animacion = 0
         pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
-        self.sombra = pilas.actores.Actor("sombra.png")
-        self.sombra.centro = ("centro", "abajo")
+        self.sombra = sombra.Sombra()
         self.altura_del_salto = 0
+        self.cargar_sonidos()
+        
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
-        self.sombra.x, self.sombra.y = self.x, self.y
-        self.sombra.escala = -0.003 * self.altura_del_salto + 1
+        self.sombra.actualizar_posicion(self.x, self.y, self.altura_del_salto)
 
     def dibujar(self, applicacion):
         """Redefine la forma de dibujar al actor para que se puede despegar
@@ -74,3 +75,13 @@ class Shaolin(pilas.actores.Actor):
             self.comportamiento_actual.pulsa_saltar()
         elif evento.codigo == pilas.simbolos.d:
             self.comportamiento_actual.pulsa_golpear()
+
+    def cargar_sonidos(self):
+        self.sonidos = {
+            'golpe': pilas.sonidos.cargar("sonidos/golpe.wav"),
+            'musica': pilas.sonidos.cargar("musica/menu.wav"),
+
+        }
+        
+    def reproducir_sonido(self, nombre):
+        self.sonidos[nombre].reproducir()
