@@ -13,6 +13,10 @@ class Shaolin(pilas.actores.Actor):
         self.sombra = sombra.Sombra()
         self.altura_del_salto = 0
         self.cargar_sonidos()
+        self.x = -230
+        self.y = -120
+        self.actualizar()
+
         
 
     def actualizar(self):
@@ -48,12 +52,13 @@ class Shaolin(pilas.actores.Actor):
         """Hace que el personaje se mueva por el escenario, pero
         prohibiendo movimientos fuera del escenario.
         """
-        self.x += x * 3
-        self.y += y * 3
+        self.x += x * 4
+        self.y += y * 4
 
         # acota 'y' a valores entre -230 y 5
         self.y = min(max(-250, self.y), 5)
         self.z = self.y
+        self.x = max(self.x, -400)
 
     def definir_cuadro(self, indice):
         self.imagen.definir_cuadro(indice)                                                       

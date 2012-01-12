@@ -21,3 +21,10 @@ class Escenario:
             self.capas.append(capa)
 
         #pilas.mundo.camara.x = [1000], 20
+
+        fondo = pilas.fondos.Desplazamiento()
+        fondo.agregar(self.capas[0], (1793)/(5300.0 + 640))
+        fondo.agregar(self.capas[1], 0.5567)
+        fondo.agregar(self.capas[2], 1)
+        fondo.agregar(self.capas[3], 1)
+
