@@ -89,6 +89,7 @@ class Golpear(Comportamiento):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('ataca1')
         self.shaolin.reproducir_sonido('golpe')
+        self.shaolin.golpear(dy=90)
 
     def actualizar(self):
         if self.shaolin.avanzar_animacion(0.5):
@@ -156,6 +157,7 @@ class GolpearSaltando(Saltar):
 
         if self.contador == 5:
             self.shaolin.reproducir_sonido('golpe')
+            self.shaolin.golpear(dx=40)
 
     def pulsa_golpear(self):
         pass
