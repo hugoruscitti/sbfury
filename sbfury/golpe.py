@@ -1,3 +1,8 @@
+# -*- encoding: utf-8 -*-
+# Shaolin's Blind Fury
+#
+# Copyright: Hugo Ruscitti
+# Web: www.losersjuegos.com.ar
 import pilas
 from configuracion import DEPURACION
 import efecto_golpe

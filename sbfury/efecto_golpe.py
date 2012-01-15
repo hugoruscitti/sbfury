@@ -1,7 +1,13 @@
+# -*- encoding: utf-8 -*-
+# Shaolin's Blind Fury
+#
+# Copyright: Hugo Ruscitti
+# Web: www.losersjuegos.com.ar
 import pilas
 import random
 
 class EfectoGolpe(pilas.actores.Animacion):
+    """Muestra un destello para representar una colisión de golpe."""
 
     def __init__(self, x, y):
         grillas = [

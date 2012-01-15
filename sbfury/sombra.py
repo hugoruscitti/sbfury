@@ -1,3 +1,9 @@
+# -*- encoding: utf-8 -*-
+# Shaolin's Blind Fury
+#
+# Copyright: Hugo Ruscitti
+# Web: www.losersjuegos.com.ar
+
 import pilas
 
 class Sombra(pilas.actores.Actor):
