@@ -6,11 +6,12 @@
 
 import pilas
 import sombra
+import enemigo
 
-class Red(pilas.actores.Actor):
+class Red(enemigo.Enemigo):
 
     def __init__(self):
-        pilas.actores.Actor.__init__(self, "red/stand.png")
+        enemigo.Enemigo.__init__(self)
         self.z = 0
         self.centro = ("centro", "abajo")
         self.x = 200

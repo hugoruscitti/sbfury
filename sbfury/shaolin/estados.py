@@ -1,4 +1,8 @@
 # -*- encoding: utf-8 -*-
+# Shaolin's Blind Fury
+#
+# Copyright: Hugo Ruscitti
+# Web: www.losersjuegos.com.ar
 import pilas
 import golpe
 
@@ -25,18 +29,13 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
     def pulsa_golpear(self):
         pass
 
-    def logra_golpear(self):
-        pass
-
-    def lo_golpean(self):
-        pass
-
     def golpear(self, dx=0, dy=40):
         self.golpe = golpe.Golpe(self.shaolin, self, self.shaolin.enemigos, dx, dy)
 
     def eliminar_golpe(self):
         if self.golpe:
             self.golpe.eliminar()
+            self.golpe = None
 
     def a_golpeado(self, otro_actor):
         pass
@@ -119,7 +118,6 @@ class Golpear(Comportamiento):
             Golpear.numero_de_ataque += 1
             Golpear.numero_de_ataque %= 5
 
-
         self.shaolin.cambiar_animacion('ataca' + str(self.numero_de_ataque))
         self.shaolin.reproducir_sonido('golpe')
         self.golpear(dy=90)
@@ -129,6 +127,13 @@ class Golpear(Comportamiento):
             self.shaolin.hacer(Parado())
             self.eliminar_golpe()
             Golpear.ha_golpeado = True
+        else:
+            if self.golpe:
+                enemigo = self.golpe.verificar_colisiones()
+
+                if enemigo:
+                    print "AAAAAAAAAAAAAAAAA"
+                    self.eliminar_golpe()
 
 class Saltar(Comportamiento):
 

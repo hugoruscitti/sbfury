@@ -223,5 +223,82 @@ En resumen, el ``shaolin``:
 - Está implementado con estados, y cada uno de ellos se encarga de atender eventos y darle el control a otro estado. Para estos se usa el código ``shaolin.hacer(nuevo_estado)``.
 
 
+Colisiones
+==========
+
+Las colisiones se implementaron para permitir que un personaje
+le pueda "pegar" a otro.
+
+Cada estado del shaolin tiene un atributo ``golpe``, que casi
+siempre apunta al valor ``None``.
+
+Cuando el personaje tiene que lanzar un golpe, se puede llamar
+al método ``golpear`` indicando la altura del golpe respecto
+de los pies del personaje.
+
+Por ejemplo, en esta versión simplificada del estado Golpear
+se ve cómo se llama a este método ``golpear`` y además se cambia 
+la animación del shaolin para que lance el puño:
+
+.. code-block:: python
+
+    class Golpear(Comportamiento):
+
+        def iniciar(self, shaolin):
+            Comportamiento.iniciar(self, shaolin)
+
+            self.shaolin.cambiar_animacion('ataca1')
+            self.shaolin.reproducir_sonido('golpe')
+            self.golpear(dy=90)
+
+el método ``golpear``, va a crear un objeto de la clase ``Golpe``, del
+archivo ``golpe.py``. Es responsabilidad del estado del shaolin
+eliminar este objeto llamando al método ``eliminar_golpe``.
+
+El objeto ``Golpe`` es un actor, y se encarga de saber si el golpe
+que emite un personaje logra golpear a otro:
+
+.. image:: imagenes/golpe.png
+
+Si quieres hacer que el golpe sea vea, tienes que editar el archivo
+``configuracion.py``.
+
+Contacto
+--------
+
+El actor ``Golpe`` se mueve por sí solo, porque tiene un método actualizar
+y conoce a quien emitió el golpe.
+
+Pero este actor no hace las verificaciones de colisión, eso es algo que se
+le tiene que preguntar, y administrar por afuera.
+
+Por ejemplo, en el estado del shaolin ``Golpear``, se construye un
+objeto ``Golpe`` y luego se consulta por las colisiones en el método
+actualizar.
+
+
+
+.. code-block:: python
+
+    class Golpear(Comportamiento):
+
+        def iniciar(self, shaolin):
+            Comportamiento.iniciar(self, shaolin)
+
+            self.shaolin.cambiar_animacion('ataca1')
+            self.shaolin.reproducir_sonido('golpe')
+            self.golpear(dy=90)
+
+        def actualizar(self):
+            if self.shaolin.avanzar_animacion(0.4):
+                self.shaolin.hacer(Parado())
+                self.eliminar_golpe()
+                Golpear.ha_golpeado = True
+            else:
+                if self.golpe:
+                    enemigo = self.golpe.verificar_colisiones()                                                                                            
+                    if enemigo:
+                        print "Ha golpeado al enemigo!!!"
+                        self.eliminar_golpe()
 
 

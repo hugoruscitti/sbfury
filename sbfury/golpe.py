@@ -23,39 +23,36 @@ class Golpe(pilas.actores.Actor):
 
     def actualizar(self):
         if self.actor.espejado:
-            self.x = self.actor.x - 50 - self.dx
+            self.x = self.actor.x - 70 - self.dx
         else:
-            self.x = self.actor.x + 50 + self.dx
+            self.x = self.actor.x + 70 + self.dx
 
         self.y = self.actor.y + self.actor.altura_del_salto + self.dy
 
-        enemigo = self.verificar_colisiones()
-
-        if enemigo:
-            self.eliminar()
 
     def verificar_colisiones(self):
-        dx = 30
         for enemigo in self.enemigos:
-            if enemigo.abajo < self.arriba < enemigo.arriba or enemigo.abajo < self.abajo < enemigo.arriba:
 
-                toque_izquierda = enemigo.izquierda + dx < self.izquierda < enemigo.derecha -dx
-                toque_derecha = enemigo.izquierda + dx < self.derecha < enemigo.derecha -dx
+            area = [
+                    enemigo.izquierda + 10, 
+                    enemigo.derecha - 10, 
+                    enemigo.abajo, 
+                    enemigo.arriba,
+                   ]
 
-                if toque_derecha and toque_derecha:
+            if enemigo.puede_ser_golpeado:
+                # colisión horizontal y vertical de caja contra punto.
+                if area[0] < self.x < area[1] and area[2] < self.y < area[3]:      
+                    # verificando que están casi en el mismo plano z.
                     if abs(enemigo.y - self.actor.y) < 15:
-                        x = random.randint(-10, 10)
-                        y = random.randint(-10, 10)
-                        if toque_izquierda:
-                            efecto_golpe.EfectoGolpe(self.x - 50 + x, self.y + y)
-                        else:
-                            efecto_golpe.EfectoGolpe(self.x + 50 + x, self.y + y)
-
+                        self.crear_efecto_de_golpe()
                         return enemigo
-
-
 
     def dibujar(self, aplicacion):
         if DEPURACION:
             pilas.actores.Actor.dibujar(self, aplicacion)
 
+    def crear_efecto_de_golpe(self):
+        dx = random.randint(-10, 10)
+        dy = random.randint(-10, 10)
+        efecto_golpe.EfectoGolpe(self.x + dx, self.y + dy)
