@@ -105,19 +105,30 @@ class Caminar(Comportamiento):
         self.shaolin.hacer(SaltarCaminando(direccion))
 
 class Golpear(Comportamiento):
+    # indica si al tirar el golpe a logrado dar con el enemigo.
+    # (esto se usa para los combos de golpes).
+    ha_golpeado = False
+    numero_de_ataque = 0
 
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
-        self.shaolin.cambiar_animacion('ataca1')
+
+        if Golpear.ha_golpeado == False:
+            Golpear.numero_de_ataque = 0
+        else:
+            Golpear.numero_de_ataque += 1
+            Golpear.numero_de_ataque %= 5
+
+
+        self.shaolin.cambiar_animacion('ataca' + str(self.numero_de_ataque))
         self.shaolin.reproducir_sonido('golpe')
         self.golpear(dy=90)
 
     def actualizar(self):
-        if self.shaolin.avanzar_animacion(0.5):
+        if self.shaolin.avanzar_animacion(0.4):
             self.shaolin.hacer(Parado())
             self.eliminar_golpe()
-
-    
+            Golpear.ha_golpeado = True
 
 class Saltar(Comportamiento):
 

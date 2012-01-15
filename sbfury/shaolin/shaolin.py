@@ -39,10 +39,11 @@ class Shaolin(pilas.actores.Actor):
         self.animaciones = {
             "parado": cargar("shaolin/parado.png", 4),
             "camina": cargar("shaolin/camina.png", 4),
+            "ataca0": cargar("shaolin/ataca0.png", 2),
             "ataca1": cargar("shaolin/ataca1.png", 2),
-            "ataca2": cargar("shaolin/ataca2.png", 2),
-            "ataca3": cargar("shaolin/ataca3.png", 2),
-            "ataca4": cargar("shaolin/ataca4.png", 2),
+            "ataca2": cargar("shaolin/ataca0.png", 2),
+            "ataca3": cargar("shaolin/ataca1.png", 2),
+            "ataca4": cargar("shaolin/ataca4.png", 4),
             "salta": cargar("shaolin/salta.png", 3),
             "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
         }

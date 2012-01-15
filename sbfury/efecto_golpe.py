@@ -14,7 +14,6 @@ class EfectoGolpe(pilas.actores.Animacion):
             pilas.sonidos.cargar("sonidos/golpe_3.wav"),
             ]
 
-
         grilla = random.choice(grillas)
         sonido = random.choice(sonidos)
         sonido.reproducir()
