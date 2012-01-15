@@ -1,8 +1,18 @@
+# -*- encoding: utf-8 -*-
+# Shaolin's Blind Fury
+#
+# Copyright: Hugo Ruscitti
+# Web: www.losersjuegos.com.ar
+
 import pilas
+import personaje
 
-
-class Enemigo(pilas.actores.Actor):
+class Enemigo(personaje.Personaje):
 
     def __init__(self):
         self.puede_ser_golpeado = True
-        pilas.actores.Actor.__init__(self, "red/parado.png")
+        personaje.Personaje.__init__(self)
+        self.imagen = "red/parado.png"
+
+    def ha_sido_golpeado(self, quien):
+        self.comportamiento_actual.ha_sido_golpeado(quien)

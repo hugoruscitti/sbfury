@@ -37,7 +37,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
             self.golpe.eliminar()
             self.golpe = None
 
-    def a_golpeado(self, otro_actor):
+    def ha_golpeado(self, otro_actor):
         pass
 
     def ha_sido_golpeado(self, otro_actor):
@@ -132,7 +132,7 @@ class Golpear(Comportamiento):
                 enemigo = self.golpe.verificar_colisiones()
 
                 if enemigo:
-                    print "AAAAAAAAAAAAAAAAA"
+                    enemigo.ha_sido_golpeado(self.shaolin)
                     self.eliminar_golpe()
 
 class Saltar(Comportamiento):

@@ -1,18 +1,47 @@
+==================================================
 Shaolin's Blind Fury - Manual para desarrolladores
 ==================================================
 
+:author: Hugo Ruscitti
 
 Introducción
-------------
+============
 
 Este documento es una guia práctica para todos
 los desarrolladores que quieran ver o modificar
 el código del videojuego ``Shaolin's Blind Fury``.
 
+Intentaré clarificar muchos de los conceptos y decisiones que
+tomé durante el desarrollo. Espero que te resulten
+útiles las explicaciones, y recordá: cualquier duda que
+tengas podés hacerla a mi correo o en el foro de losersjuegos:
 
-El documento está separado en varias partes para simplificar
-la lectura, pero se intentará mostrar todas las decisiones
-de diseño y las estrategias que hacen funcionar al juego.
+- http://www.losersjuegos.com.ar
+
+
+Vistazo general
+===============
+
+El juego está organizado en distintos módulos de python, usando
+varios conceptos de programación orientada a objetos y algunos
+patrones de diseño.
+
+A medida que vallamos avanzando, voy a ir contando de qué se
+tratan los módulos y voy a simplificar tanto cómo pueda
+la aplicación de los patrones de diseño. No hace falta que
+conozcas mucho en profundidad estos conceptos, yo creo que
+con un poco de paciencia y explorando poco a poco este texto
+la idea va a quedar clara.
+
+
+Mi recomendación, es que vallas poco a poco por los componentes
+del juego. El título de esta sección es casi una broma, porque
+en realidad, no hay vistazo general. Es mejor ir de abajo hacia
+arriba, tomá una partecita del código (por ejemplo a un enemigo)
+y explorala ignorando lo demás.
+
+Este juego tiene varias partes, no es bueno tratar de entenderlas
+a todas al mismo tiempo y a la vez. Paciencia...
 
 
 El protagonista: Shaolin
@@ -32,7 +61,7 @@ ejecuta esta sentencia:
 
 .. code-block:: python
 
-    shaolin.hacer(estados.Parado()
+    shaolin.hacer(estados.Parado())
 
 
 Este método ``hacer``, toma un objeto comportamiento, y cada
