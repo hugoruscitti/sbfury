@@ -1,11 +1,10 @@
 import pilas
 import estados
 import sombra
-import golpe
 
 class Shaolin(pilas.actores.Actor):
 
-    def __init__(self):
+    def __init__(self, enemigos):
         self._cargar_animaciones()
         pilas.actores.Actor.__init__(self)
         self.hacer(estados.Parado())
@@ -17,6 +16,7 @@ class Shaolin(pilas.actores.Actor):
         self.x = -230
         self.y = -120
         self.actualizar()
+        self.enemigos = enemigos
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
@@ -89,6 +89,3 @@ class Shaolin(pilas.actores.Actor):
         
     def reproducir_sonido(self, nombre):
         self.sonidos[nombre].reproducir()
-
-    def golpear(self, dx=0, dy=40):
-        golpe.Golpe(self, dx, dy)

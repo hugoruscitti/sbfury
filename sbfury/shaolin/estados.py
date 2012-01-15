@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import pilas
+import golpe
 
 class Comportamiento(pilas.comportamientos.Comportamiento):
     """Representa una accion que puede realizar el shaolin, cómo
@@ -16,11 +17,31 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
     def iniciar(self, shaolin):
         self.shaolin = shaolin
         self.control = pilas.mundo.control
+        self.golpe = None
 
     def pulsa_saltar(self):
         pass
 
     def pulsa_golpear(self):
+        pass
+
+    def logra_golpear(self):
+        pass
+
+    def lo_golpean(self):
+        pass
+
+    def golpear(self, dx=0, dy=40):
+        self.golpe = golpe.Golpe(self.shaolin, self, self.shaolin.enemigos, dx, dy)
+
+    def eliminar_golpe(self):
+        if self.golpe:
+            self.golpe.eliminar()
+
+    def a_golpeado(self, otro_actor):
+        pass
+
+    def ha_sido_golpeado(self, otro_actor):
         pass
 
 class Parado(Comportamiento):
@@ -89,11 +110,14 @@ class Golpear(Comportamiento):
         Comportamiento.iniciar(self, shaolin)
         self.shaolin.cambiar_animacion('ataca1')
         self.shaolin.reproducir_sonido('golpe')
-        self.shaolin.golpear(dy=90)
+        self.golpear(dy=90)
 
     def actualizar(self):
         if self.shaolin.avanzar_animacion(0.5):
             self.shaolin.hacer(Parado())
+            self.eliminar_golpe()
+
+    
 
 class Saltar(Comportamiento):
 
@@ -107,8 +131,7 @@ class Saltar(Comportamiento):
         self.velocidad_inicial -= 0.75
 
         if self.shaolin.altura_del_salto < 0:
-            self.shaolin.altura_del_salto = 0
-            self.shaolin.hacer(Parado())
+            self.terminar_salto()
 
         if 1 < self.velocidad_inicial:
             self.shaolin.definir_cuadro(0)
@@ -116,6 +139,10 @@ class Saltar(Comportamiento):
             self.shaolin.definir_cuadro(1)
         elif self.velocidad_inicial < -5:
             self.shaolin.definir_cuadro(2)
+
+    def terminar_salto(self):
+        self.shaolin.altura_del_salto = 0
+        self.shaolin.hacer(Parado())
 
     def pulsa_golpear(self):
         self.shaolin.hacer(GolpearSaltando(self.velocidad_inicial, 0))
@@ -157,7 +184,11 @@ class GolpearSaltando(Saltar):
 
         if self.contador == 5:
             self.shaolin.reproducir_sonido('golpe')
-            self.shaolin.golpear(dx=40)
+            self.golpear(dx=40)
 
     def pulsa_golpear(self):
         pass
+
+    def terminar_salto(self):
+        Saltar.terminar_salto(self)
+        self.eliminar_golpe()
