@@ -84,7 +84,6 @@ class Shaolin(pilas.actores.Actor):
         self.sonidos = {
             'golpe': pilas.sonidos.cargar("sonidos/golpe.wav"),
             'musica': pilas.sonidos.cargar("musica/menu.wav"),
-
         }
         
     def reproducir_sonido(self, nombre):
