@@ -6,6 +6,10 @@
 import pilas
 import random
 
+
+sonidos = None
+sonido = None
+
 class EfectoGolpe(pilas.actores.Animacion):
     """Muestra un destello para representar una colisión de golpe."""
 
@@ -14,13 +18,17 @@ class EfectoGolpe(pilas.actores.Animacion):
                 pilas.imagenes.cargar_grilla("golpe_1.png", 2),
                 pilas.imagenes.cargar_grilla("golpe_2.png", 2),
             ]
-        sonidos = [
-            pilas.sonidos.cargar("sonidos/golpe_1.wav"),
-            pilas.sonidos.cargar("sonidos/golpe_2.wav"),
-            pilas.sonidos.cargar("sonidos/golpe_3.wav"),
+        global sonidos
+
+        if not sonidos:
+            sonidos = [
+                pilas.sonidos.cargar("sonidos/golpe_1.wav"),
+                pilas.sonidos.cargar("sonidos/golpe_2.wav"),
+                pilas.sonidos.cargar("sonidos/golpe_3.wav"),
             ]
 
         grilla = random.choice(grillas)
+        global sonido 
         sonido = random.choice(sonidos)
         sonido.reproducir()
         pilas.actores.Animacion.__init__(self, grilla, ciclica=False, 
