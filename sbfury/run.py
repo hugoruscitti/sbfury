@@ -15,8 +15,8 @@ pilas.iniciar(ancho=853, alto=480, usar_motor='qtgl', titulo="Shaolin's Blind Fu
 
 lista_enemigos.append(enemigos.Red())
 
-shaolin.Shaolin(lista_enemigos)
-escenario.Escenario()
+s = shaolin.Shaolin(lista_enemigos)
+escenario.Escenario(s)
 
 #pilas.mundo.camara.x = [5300 - 640], 3
 #pilas.mundo.camara.x = [100], 40

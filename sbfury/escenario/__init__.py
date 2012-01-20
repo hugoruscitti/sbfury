@@ -7,7 +7,7 @@ import pilas
 
 class Escenario:
 
-    def __init__(self):
+    def __init__(self, shaolin):
         fondos = [
                     ("nivel1/layer_3.png", -320, 240, 500),
                     ("nivel1/layer_2.png", -320, 240, 450),
@@ -27,9 +27,24 @@ class Escenario:
 
         #pilas.mundo.camara.x = [1000], 20
 
+        self.shaolin = shaolin
+        self.cargar_temporizador()
+        self.crear_capas()
+
+    def cargar_temporizador(self):
+        pilas.mundo.tareas.siempre(0.1, self.mover_camara)
+
+    def mover_camara(self):
+        camara = pilas.mundo.camara
+        if camara.x + 100 < self.shaolin.x:
+            camara.x = [self.shaolin.x - 100], 0.1
+
+
+    def crear_capas(self):
         fondo = pilas.fondos.Desplazamiento()
         fondo.agregar(self.capas[0], (1793)/(5300.0 + 640))
         fondo.agregar(self.capas[1], 0.5567)
         fondo.agregar(self.capas[2], 1)
         fondo.agregar(self.capas[3], 1)
+
 

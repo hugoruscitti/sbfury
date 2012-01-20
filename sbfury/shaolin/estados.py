@@ -132,8 +132,8 @@ class Golpear(Comportamiento):
                 enemigo = self.golpe.verificar_colisiones()
 
                 if enemigo:
-                    enemigo.ha_sido_golpeado(self.shaolin)
                     self.eliminar_golpe()
+                    enemigo.ha_sido_golpeado(self.shaolin)
 
 class Saltar(Comportamiento):
 
