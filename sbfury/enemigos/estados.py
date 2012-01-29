@@ -83,10 +83,9 @@ class LoGolpeanFuerte(LoGolpean):
         self.velocidad_inicial = self.velocidad_general
 
         if self.enemigo.espejado:
-
-            self.velocidad_horizontal = 1.5
+            self.velocidad_horizontal = 1.25
         else:
-            self.velocidad_horizontal = -1.5
+            self.velocidad_horizontal = -1.25
 
     def actualizar(self):
         self.enemigo.altura_del_salto += self.velocidad_inicial
