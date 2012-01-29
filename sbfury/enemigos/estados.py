@@ -25,7 +25,13 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         pass
 
     def ha_sido_golpeado(self, otro_actor, fuerte=False):
-        pass
+        # Mira hacia el lado en donde recibe el golpe.
+        self.enemigo.espejado = otro_actor.x < self.enemigo.x
+
+        if fuerte:
+            self.enemigo.hacer(LoGolpeanFuerte())
+        else:
+            self.enemigo.hacer(LoGolpean())
 
 
 class Parado(Comportamiento):
@@ -36,15 +42,16 @@ class Parado(Comportamiento):
 
     def actualizar(self):
         pass
-        
-    def ha_sido_golpeado(self, otro_actor, fuerte=False):
-        # Mira hacia el lado en donde recibe el golpe.
-        self.enemigo.espejado = otro_actor.x < self.enemigo.x
 
-        if fuerte:
-            self.enemigo.hacer(LoGolpeanFuerte())
-        else:
-            self.enemigo.hacer(LoGolpean())
+class Caminar(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('caminar')
+
+    def actualizar(self):
+        #self.enemigo.mover(1, 0)
+        
 
 
 class Golpear(Comportamiento):

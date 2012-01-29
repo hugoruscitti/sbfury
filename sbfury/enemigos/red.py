@@ -18,11 +18,11 @@ class Red(enemigo.Enemigo):
         self.z = 0
         self.centro = ("centro", "abajo")
         self.x = 200
+        self.y = -100
         self.altura_del_salto = 0
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
-        self.cambiar_animacion('camina')
-        self.hacer(estados.Golpear())
+        self.hacer(estados.Caminar())
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
@@ -35,5 +35,5 @@ class Red(enemigo.Enemigo):
                 'golpear': cargar("red/golpear.png", 3),
                 'lo_golpean': cargar("red/lo_golpean.png", 1),
                 'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
-                'camina': cargar("red/camina.png", 4),
+                'caminar': cargar("red/caminar.png", 4),
             }
