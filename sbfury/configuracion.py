@@ -4,4 +4,4 @@
 # Copyright: Hugo Ruscitti
 # Web: www.losersjuegos.com.ar
 
-DEPURACION = False
+DEPURACION = True

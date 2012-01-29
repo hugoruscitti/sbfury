@@ -120,6 +120,8 @@ class Golpear(Comportamiento):
 
         self.shaolin.cambiar_animacion('ataca' + str(self.numero_de_ataque))
         self.shaolin.reproducir_sonido('golpe')
+        # genera el atributo golpe, que vive hasta que se llama al
+        # método eliminar_golpe
         self.golpear(dy=90)
 
     def actualizar(self):
@@ -202,9 +204,21 @@ class GolpearSaltando(Saltar):
             self.shaolin.reproducir_sonido('golpe')
             self.golpear(dx=40)
 
+        if self.contador >= 5 and self.golpe:
+            enemigo = self.golpe.verificar_colisiones()
+
+            if enemigo:
+                self.eliminar_golpe()
+                enemigo.ha_sido_golpeado(self.shaolin)
+
+
+
+
     def pulsa_golpear(self):
         pass
 
     def terminar_salto(self):
         Saltar.terminar_salto(self)
-        self.eliminar_golpe()
+
+        if self.contador >= 5:
+            self.eliminar_golpe()
