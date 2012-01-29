@@ -78,6 +78,7 @@ class LoGolpeanFuerte(LoGolpean):
 
     def iniciar(self, enemigo):
         LoGolpean.iniciar(self, enemigo)
+        self.enemigo.puede_ser_golpeado = False
         self.enemigo.cambiar_animacion('lo_golpean_fuerte')
         self.velocidad_general = 14
         self.velocidad_inicial = self.velocidad_general
@@ -120,6 +121,7 @@ class QuedarseEnElSuelo(Comportamiento):
         self.enemigo.cambiar_animacion('lo_golpean_fuerte')
         self.enemigo.definir_cuadro(1)
         self.contador = 60
+        self.enemigo.puede_ser_golpeado = False
 
     def actualizar(self):
         self.enemigo.definir_cuadro(1)
@@ -129,4 +131,5 @@ class QuedarseEnElSuelo(Comportamiento):
             self.levantarse()
 
     def levantarse(self):
+        self.enemigo.puede_ser_golpeado = True
         self.enemigo.hacer(Parado())
