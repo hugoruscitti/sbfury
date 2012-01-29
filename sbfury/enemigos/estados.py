@@ -47,6 +47,15 @@ class Parado(Comportamiento):
             self.enemigo.hacer(LoGolpean())
 
 
+class Golpear(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('golpear')
+
+    def actualizar(self):
+        pass
+
 class LoGolpean(Comportamiento):
 
     def iniciar(self, enemigo):

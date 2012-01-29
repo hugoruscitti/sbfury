@@ -22,7 +22,7 @@ class Red(enemigo.Enemigo):
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
         self.cambiar_animacion('camina')
-        self.hacer(estados.Parado())
+        self.hacer(estados.Golpear())
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
@@ -32,6 +32,7 @@ class Red(enemigo.Enemigo):
         cargar = pilas.imagenes.cargar_grilla
         self.animaciones = {
                 'parado': cargar("red/parado.png", 1),
+                'golpear': cargar("red/golpear.png", 3),
                 'lo_golpean': cargar("red/lo_golpean.png", 1),
                 'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
                 'camina': cargar("red/camina.png", 4),
