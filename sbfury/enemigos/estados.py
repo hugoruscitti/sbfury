@@ -24,7 +24,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
     def ha_golpeado(self, otro_actor):
         pass
 
-    def ha_sido_golpeado(self, otro_actor):
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
         pass
 
 
@@ -37,8 +37,15 @@ class Parado(Comportamiento):
     def actualizar(self):
         pass
         
-    def ha_sido_golpeado(self, otro_actor):
-        self.enemigo.hacer(LoGolpean())
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        # Mira hacia el lado en donde recibe el golpe.
+        self.enemigo.espejado = otro_actor.x < self.enemigo.x
+
+        if fuerte:
+            self.enemigo.hacer(LoGolpeanFuerte())
+        else:
+            self.enemigo.hacer(LoGolpean())
+
 
 class LoGolpean(Comportamiento):
 
@@ -64,5 +71,50 @@ class LoGolpean(Comportamiento):
         else:
             self.contador -= 1
         
-    def ha_sido_golpeado(self, otro_actor):
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
         pass
+
+class LoGolpeanFuerte(LoGolpean):
+
+    def iniciar(self, enemigo):
+        LoGolpean.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('lo_golpean_fuerte')
+        self.velocidad_inicial = 14
+
+    def actualizar(self):
+        self.enemigo.altura_del_salto += self.velocidad_inicial
+        self.velocidad_inicial -= 0.75
+
+        self.enemigo.definir_cuadro(0)
+
+        if self.enemigo.altura_del_salto < 0:
+            self.terminar_caida()
+
+        if self.enemigo.espejado:
+            self.enemigo.mover(1.5, 0)
+        else:
+            self.enemigo.mover(-1.5, 0)
+
+    def terminar_caida(self):
+        self.enemigo.hacer(QuedarseEnElSuelo())
+
+
+class QuedarseEnElSuelo(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('lo_golpean_fuerte')
+        self.enemigo.definir_cuadro(1)
+        self.contador = 60
+
+    def actualizar(self):
+        self.enemigo.definir_cuadro(1)
+        self.contador -= 1
+
+        if self.contador < 0:
+            self.levantarse()
+
+    def levantarse(self):
+        self.enemigo.hacer(Parado())
+
+

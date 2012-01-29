@@ -33,5 +33,6 @@ class Red(enemigo.Enemigo):
         self.animaciones = {
                 'parado': cargar("red/parado.png", 1),
                 'lo_golpean': cargar("red/lo_golpean.png", 1),
+                'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
                 'camina': cargar("red/camina.png", 4),
             }

@@ -209,10 +209,7 @@ class GolpearSaltando(Saltar):
 
             if enemigo:
                 self.eliminar_golpe()
-                enemigo.ha_sido_golpeado(self.shaolin)
-
-
-
+                enemigo.ha_sido_golpeado(self.shaolin, fuerte=True)
 
     def pulsa_golpear(self):
         pass

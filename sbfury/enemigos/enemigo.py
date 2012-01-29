@@ -14,5 +14,5 @@ class Enemigo(personaje.Personaje):
         personaje.Personaje.__init__(self)
         self.imagen = "red/parado.png"
 
-    def ha_sido_golpeado(self, quien):
-        self.comportamiento_actual.ha_sido_golpeado(quien)
+    def ha_sido_golpeado(self, quien, fuerte=False):
+        self.comportamiento_actual.ha_sido_golpeado(quien, fuerte)
