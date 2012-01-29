@@ -112,9 +112,12 @@ class Golpear(Comportamiento):
     def iniciar(self, shaolin):
         Comportamiento.iniciar(self, shaolin)
 
+        # Si esta dando golpes al aire solo usa piñas.
         if Golpear.ha_golpeado == False:
-            Golpear.numero_de_ataque = 0
+            Golpear.numero_de_ataque += 1
+            Golpear.numero_de_ataque %= 2
         else:
+            # Si logró golpear, entonces intercala patadas también.
             Golpear.numero_de_ataque += 1
             Golpear.numero_de_ataque %= 5
 
@@ -128,7 +131,6 @@ class Golpear(Comportamiento):
         if self.shaolin.avanzar_animacion(0.4):
             self.shaolin.hacer(Parado())
             self.eliminar_golpe()
-            Golpear.ha_golpeado = True
         else:
             if self.golpe:
                 enemigo = self.golpe.verificar_colisiones()
@@ -141,6 +143,10 @@ class Golpear(Comportamiento):
                     # el mas fuerte de todos (lo va a tirar al suelo).
                     ataque_fuerte = (self.numero_de_ataque == 4)
                     enemigo.ha_sido_golpeado(self.shaolin, fuerte=ataque_fuerte)
+                    Golpear.ha_golpeado = True
+                else:
+                    Golpear.ha_golpeado =False
+
 
 class Saltar(Comportamiento):
 
