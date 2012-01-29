@@ -79,21 +79,36 @@ class LoGolpeanFuerte(LoGolpean):
     def iniciar(self, enemigo):
         LoGolpean.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('lo_golpean_fuerte')
-        self.velocidad_inicial = 14
+        self.velocidad_general = 14
+        self.velocidad_inicial = self.velocidad_general
+
+        if self.enemigo.espejado:
+
+            self.velocidad_horizontal = 1.5
+        else:
+            self.velocidad_horizontal = -1.5
 
     def actualizar(self):
         self.enemigo.altura_del_salto += self.velocidad_inicial
         self.velocidad_inicial -= 0.75
 
-        self.enemigo.definir_cuadro(0)
+        if self.enemigo.altura_del_salto < 30:
+            # Si está cerca del suelo se muestra acostado.
+            self.enemigo.definir_cuadro(1)
+        else:
+            self.enemigo.definir_cuadro(0)
 
         if self.enemigo.altura_del_salto < 0:
-            self.terminar_caida()
+            # Si toca el suelo rebota con menos intensidad.
+            self.velocidad_horizontal /= 1.5
+            self.velocidad_general -= 4
+            self.velocidad_inicial = self.velocidad_general
+            self.altura_del_salto = 0
 
-        if self.enemigo.espejado:
-            self.enemigo.mover(1.5, 0)
-        else:
-            self.enemigo.mover(-1.5, 0)
+            if self.velocidad_general < 0:
+                self.terminar_caida()
+
+        self.enemigo.mover(self.velocidad_horizontal, 0)
 
     def terminar_caida(self):
         self.enemigo.hacer(QuedarseEnElSuelo())
