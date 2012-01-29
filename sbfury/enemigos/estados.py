@@ -51,6 +51,7 @@ class Caminar(Comportamiento):
 
     def actualizar(self):
         #self.enemigo.mover(1, 0)
+        pass
         
 
 
