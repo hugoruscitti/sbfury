@@ -135,7 +135,12 @@ class Golpear(Comportamiento):
 
                 if enemigo:
                     self.eliminar_golpe()
-                    enemigo.ha_sido_golpeado(self.shaolin)
+
+                    # Le avisa al enemigo que ha sido golpeado, y si
+                    # justo está dando una patada, le avisa que ese golpe es
+                    # el mas fuerte de todos (lo va a tirar al suelo).
+                    ataque_fuerte = (self.numero_de_ataque == 4)
+                    enemigo.ha_sido_golpeado(self.shaolin, fuerte=ataque_fuerte)
 
 class Saltar(Comportamiento):
 

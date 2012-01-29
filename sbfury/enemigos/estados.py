@@ -116,5 +116,3 @@ class QuedarseEnElSuelo(Comportamiento):
 
     def levantarse(self):
         self.enemigo.hacer(Parado())
-
-
