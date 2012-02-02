@@ -23,6 +23,7 @@ class Red(enemigo.Enemigo):
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
         self.hacer(estados.Caminar())
+        self.mover(0, 0)
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
