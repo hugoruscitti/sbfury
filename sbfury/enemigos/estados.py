@@ -6,13 +6,25 @@
 import pilas
 import random
 
+
 class Comportamiento(pilas.comportamientos.Comportamiento):
+
+    def __init__(self, segundos=2):
+        self.ticks_totales_para_avanzar_de_estado = segundos * 60
+        self.contador_de_tiempo = 0
 
     def iniciar(self, enemigo):
         self.enemigo = enemigo
         self.control = pilas.mundo.control
         self.golpe = None
 
+    def actualizar(self):
+        self.contador_de_tiempo += 1
+
+        if self.contador_de_tiempo > self.ticks_totales_para_avanzar_de_estado:
+            self.contador_de_tiempo = 0
+            self.enemigo.pasar_al_siguiente_estado_ai()
+    
     #def golpear(self, dx=0, dy=40):
     #    self.golpe = golpe.Golpe(self.shaolin, self, self.shaolin.enemigos, dx, dy)
 
@@ -39,21 +51,29 @@ class Parado(Comportamiento):
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('parado')
+        self.total = 60
+        self.contador = 0
+        self.enemigo.mirar_al_shaolin()
 
     def actualizar(self):
-        pass
+        Comportamiento.actualizar(self)
+        self.enemigo.mirar_al_shaolin()
 
-class Caminar(Comportamiento):
+
+class CaminarAleatoriamente(Comportamiento):
 
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('caminar')
 
-    def actualizar(self):
-        #self.enemigo.mover(1, 0)
-        pass
-        
+        self.dx = random.choice([1, -1])
+        self.dy = random.choice([1, 0, -1])
 
+    def actualizar(self):
+        Comportamiento.actualizar(self)
+        self.enemigo.mover(self.dx, self.dy)
+        self.enemigo.mirar_al_shaolin()
+        
 
 class Golpear(Comportamiento):
 
@@ -84,12 +104,13 @@ class LoGolpean(Comportamiento):
         if self.contador < 0:
             self.enemigo.x = self.x_inicial
             self.enemigo.y = self.y_inicial
-            self.enemigo.hacer(Parado())
+            self.enemigo.pasar_al_siguiente_estado_ai()
         else:
             self.contador -= 1
         
     def ha_sido_golpeado(self, otro_actor, fuerte=False):
         pass
+
 
 class LoGolpeanFuerte(LoGolpean):
 
@@ -149,4 +170,4 @@ class QuedarseEnElSuelo(Comportamiento):
 
     def levantarse(self):
         self.enemigo.puede_ser_golpeado = True
-        self.enemigo.hacer(Parado())
+        self.enemigo.pasar_al_siguiente_estado_ai()

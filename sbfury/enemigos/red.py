@@ -12,8 +12,9 @@ import estados
 class Red(enemigo.Enemigo):
     """El Ninja de color rojo"""
 
-    def __init__(self):
+    def __init__(self, shaolin):
         enemigo.Enemigo.__init__(self)
+        self.shaolin = shaolin
         self._cargar_animaciones()
         self.z = 0
         self.centro = ("centro", "abajo")
@@ -22,12 +23,29 @@ class Red(enemigo.Enemigo):
         self.altura_del_salto = 0
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
-        self.hacer(estados.Caminar())
+
+        # inicia la lista de comportamientos para inteligencia artificia (AI)
+        self.comportamientos_ai = [
+                    estados.CaminarAleatoriamente(segundos=0.5),
+                    estados.Parado(segundos=1),
+                    ]
+        self.comportamiento_ai_indice = 0
+        self.pasar_al_siguiente_estado_ai()
         self.mover(0, 0)
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
         self.avanzar_animacion(0.15)
+
+    def pasar_al_siguiente_estado_ai(self):
+        # Avanza en la lista de comportamientos como si fuera una lista
+        # infinita.
+        self.comportamiento_ai_indice += 1
+        self.comportamiento_ai_indice %= len(self.comportamientos_ai)
+
+        # Toma la instancia del comportamiento y comienza a realizarlo.
+        estado_nuevo = self.comportamientos_ai[self.comportamiento_ai_indice]
+        self.hacer(estado_nuevo)
 
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla
@@ -38,3 +56,6 @@ class Red(enemigo.Enemigo):
                 'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
                 'caminar': cargar("red/caminar.png", 4),
             }
+
+    def mirar_al_shaolin(self):
+        self.espejado = self.shaolin.x < self.x
