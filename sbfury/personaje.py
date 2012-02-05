@@ -61,6 +61,7 @@ class Personaje(pilas.actores.Actor):
     def cambiar_animacion(self, nombre):
         self.imagen = self.animaciones[nombre]
         self.centro = ("centro", "abajo")
+        self.tmp_velocidad_animacion = 0
 
     def _cargar_animaciones(self):
         #cargar = pilas.imagenes.cargar_grilla

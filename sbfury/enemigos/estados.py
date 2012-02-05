@@ -5,6 +5,7 @@
 # Web: www.losersjuegos.com.ar
 import pilas
 import random
+import estrella
 
 
 class Comportamiento(pilas.comportamientos.Comportamiento):
@@ -51,8 +52,6 @@ class Parado(Comportamiento):
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('parado')
-        self.total = 60
-        self.contador = 0
         self.enemigo.mirar_al_shaolin()
 
     def actualizar(self):
@@ -200,3 +199,22 @@ class CaminaHaciaLineaVerticalDelShaolin(Comportamiento):
             self.dy = -1
         else:
             self.dy = 1
+
+
+class LanzarEstrella(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('lanzar')
+        self.enemigo.mirar_al_shaolin()
+        estrella.Estrella(self.enemigo.x, self.enemigo.y, -1, self.enemigo.shaolin)
+        self.contador = 0
+
+    def actualizar(self):
+        Comportamiento.actualizar(self)
+        self.enemigo.mirar_al_shaolin()
+
+        self.contador += 1
+        if self.contador > 30:
+            self.enemigo.pasar_al_siguiente_estado_ai()
+

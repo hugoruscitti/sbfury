@@ -27,6 +27,7 @@ class Red(enemigo.Enemigo):
         # inicia la lista de comportamientos para inteligencia artificia (AI)
         self.comportamientos_ai = [
                     estados.Parado(segundos=1),
+                    estados.LanzarEstrella(),
                     estados.CaminarAleatoriamente(segundos=0.5),
                     estados.Parado(segundos=1),
                     estados.CaminaHaciaLineaVerticalDelShaolin(segundos=1),
@@ -57,6 +58,7 @@ class Red(enemigo.Enemigo):
                 'lo_golpean': cargar("red/lo_golpean.png", 1),
                 'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
                 'caminar': cargar("red/caminar.png", 4),
+                'lanzar': cargar("red/lanzar.png", 4),
             }
 
     def mirar_al_shaolin(self):
