@@ -13,6 +13,7 @@ class Enemigo(personaje.Personaje):
         self.puede_ser_golpeado = True
         personaje.Personaje.__init__(self)
         self.imagen = "red/parado.png"
+        self.velocidad = 2
 
     def ha_sido_golpeado(self, quien, fuerte=False):
         self.comportamiento_actual.ha_sido_golpeado(quien, fuerte)

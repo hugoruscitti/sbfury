@@ -17,6 +17,7 @@ class Personaje(pilas.actores.Actor):
         self.sombra = sombra.Sombra()
         self.altura_del_salto = 0
         self.tmp_velocidad_animacion = 0
+        self.velocidad = 4
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
@@ -26,8 +27,8 @@ class Personaje(pilas.actores.Actor):
         """Hace que el personaje se mueva por el escenario, pero
         prohibiendo movimientos fuera del escenario.
         """
-        self.x += x * 4
-        self.y += y * 4
+        self.x += x * self.velocidad
+        self.y += y * self.velocidad
 
         # acota 'y' a valores entre -230 y 5
         self.y = min(max(-250, self.y), 5)

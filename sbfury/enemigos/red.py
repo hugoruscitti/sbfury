@@ -26,8 +26,10 @@ class Red(enemigo.Enemigo):
 
         # inicia la lista de comportamientos para inteligencia artificia (AI)
         self.comportamientos_ai = [
+                    estados.Parado(segundos=1),
                     estados.CaminarAleatoriamente(segundos=0.5),
                     estados.Parado(segundos=1),
+                    estados.CaminaHaciaLineaVerticalDelShaolin(segundos=1),
                     ]
         self.comportamiento_ai_indice = 0
         self.pasar_al_siguiente_estado_ai()

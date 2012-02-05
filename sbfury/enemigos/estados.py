@@ -171,3 +171,32 @@ class QuedarseEnElSuelo(Comportamiento):
     def levantarse(self):
         self.enemigo.puede_ser_golpeado = True
         self.enemigo.pasar_al_siguiente_estado_ai()
+
+
+
+class CaminaHaciaLineaVerticalDelShaolin(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('caminar')
+        self._seleccionar_dy()
+        self._salir_si_esta_cerca_verticalmente()
+
+    def actualizar(self):
+        Comportamiento.actualizar(self)
+        self.enemigo.mover(0, self.dy)
+        self.enemigo.mirar_al_shaolin()
+        self._salir_si_esta_cerca_verticalmente()
+
+    def _distancia_vertical_al_shaolin(self):
+        return abs(self.enemigo.shaolin.y - self.enemigo.y)
+
+    def _salir_si_esta_cerca_verticalmente(self):
+        if self._distancia_vertical_al_shaolin() < 10:
+            self.enemigo.pasar_al_siguiente_estado_ai()
+
+    def _seleccionar_dy(self):
+        if self.enemigo.shaolin.y < self.enemigo.y:
+            self.dy = -1
+        else:
+            self.dy = 1
