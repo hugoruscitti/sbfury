@@ -14,7 +14,6 @@ class Golpe(pilas.actores.Actor):
     def __init__(self, actor, estado, enemigos, dx, dy):
         pilas.actores.Actor.__init__(self)
         self.imagen = 'colision.png'
-        self.z = -200
         self.actor = actor
         self.dx = dx
         self.dy = dy

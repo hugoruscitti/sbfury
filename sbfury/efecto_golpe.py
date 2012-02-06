@@ -36,4 +36,5 @@ class EfectoGolpe(pilas.actores.Animacion):
         self.escala = 0.5
         self.escala = [1.5], 0.1
         self.rotacion = random.choice([0, 45, 90, 150])
+        self.z = -1000
 
