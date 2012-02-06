@@ -207,7 +207,13 @@ class LanzarEstrella(Comportamiento):
         Comportamiento.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('lanzar')
         self.enemigo.mirar_al_shaolin()
-        estrella.Estrella(self.enemigo.x, self.enemigo.y, -1, self.enemigo.shaolin)
+
+        if enemigo.espejado:
+            direccion = -1
+        else:
+            direccion = 1
+
+        estrella.Estrella(self.enemigo.x, self.enemigo.y, direccion, self.enemigo.shaolin)
         self.contador = 0
 
     def actualizar(self):
