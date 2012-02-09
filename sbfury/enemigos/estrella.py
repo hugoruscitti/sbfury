@@ -37,4 +37,5 @@ class Estrella(enemigo.Enemigo):
         self.z = self.y
         self.sombra.escala = 0.5
 
-        # TODO: eliminar si está fuera de la pantalla.
+        if self.esta_fuera_de_la_pantalla():
+            self.eliminar()
