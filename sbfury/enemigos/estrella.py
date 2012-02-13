@@ -39,3 +39,4 @@ class Estrella(enemigo.Enemigo):
 
         if self.esta_fuera_de_la_pantalla():
             self.eliminar()
+            self.sombra.eliminar()
