@@ -331,3 +331,23 @@ actualizar.
                         self.eliminar_golpe()
 
 
+
+Barra de energía y vida
+-----------------------
+
+La energía de los personajes es un número que va de ``100`` a ``0``. ``100``
+significa que tienen toda la energía disponible, mientras que algo menor
+a ``0`` hace que el personaje muera.
+
+¿Cómo se implementó esto?, todos los personajes del juego heredan de la
+clase ``Personaje``, ahí se hizo que todos los personajes comiencen
+con una energía de ``100``.
+
+A medida que un actor recibe golpes, lo que hace es llamar el método
+``reducir_energia`` y éste emite un evento personalizado del juego llamado
+``se_golpea_a_enemigo``.
+
+Mediante este evento, se logra comunicar a los enemigos con su barra de
+energía. En realidad, la barra de energía no sabe bien a qué jugar está
+mostrando, la barra de energía solamente se conectó al evento ``se_golpea_a_enemigo``
+y cada vez que recibe una alerta toma al actor y muestra su energía.

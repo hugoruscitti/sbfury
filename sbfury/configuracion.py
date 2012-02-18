@@ -4,4 +4,5 @@
 # Copyright: Hugo Ruscitti
 # Web: www.losersjuegos.com.ar
 
-DEPURACION = True
+# Muestra los golpes como actores visibles.
+DEPURACION = False

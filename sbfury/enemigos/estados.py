@@ -41,7 +41,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         # Mira hacia el lado en donde recibe el golpe.
         self.enemigo.espejado = otro_actor.x < self.enemigo.x
 
-        if fuerte:
+        if fuerte or self.enemigo.energia < 0:
             self.enemigo.hacer(LoGolpeanFuerte())
         else:
             self.enemigo.hacer(LoGolpean())
@@ -92,7 +92,12 @@ class LoGolpean(Comportamiento):
         self.y_inicial = self.enemigo.y
         self.contador = 20
 
+        # emite evento para avisar que ha sido golpeado
+        enemigo.reducir_energia(5)
+
+
     def actualizar(self):
+
         x = self.x_inicial
         y = self.y_inicial
 
@@ -125,6 +130,9 @@ class LoGolpeanFuerte(LoGolpean):
         else:
             self.velocidad_horizontal = -1.55
 
+        # emite evento para avisar que ha sido golpeado
+        enemigo.reducir_energia(8)
+
     def actualizar(self):
         self.enemigo.altura_del_salto += self.velocidad_inicial
         self.velocidad_inicial -= 0.75
@@ -148,8 +156,10 @@ class LoGolpeanFuerte(LoGolpean):
         self.enemigo.mover(self.velocidad_horizontal, 0)
 
     def terminar_caida(self):
-        self.enemigo.hacer(QuedarseEnElSuelo())
-
+        if self.enemigo.energia < 0:
+            self.enemigo.hacer(Morirse())
+        else:
+            self.enemigo.hacer(QuedarseEnElSuelo())
 
 class QuedarseEnElSuelo(Comportamiento):
 
@@ -224,3 +234,25 @@ class LanzarEstrella(Comportamiento):
         if self.contador > 30:
             self.enemigo.pasar_al_siguiente_estado_ai()
 
+
+class Morirse(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.cambiar_animacion('lo_golpean_fuerte')
+        self.enemigo.definir_cuadro(1)
+        self.enemigo.puede_ser_golpeado = False
+
+    def actualizar(self):
+        Comportamiento.actualizar(self)
+        self.enemigo.definir_cuadro(1)
+
+        self.enemigo.transparencia += 1
+        self.enemigo.sombra.transparencia += 1
+
+        if self.enemigo.transparencia > 100:
+            self.eliminar_actor_del_escenario()
+
+    def eliminar_actor_del_escenario(self):
+        self.enemigo.sombra.eliminar()
+        self.enemigo.eliminar()

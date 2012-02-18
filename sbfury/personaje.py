@@ -18,6 +18,7 @@ class Personaje(pilas.actores.Actor):
         self.altura_del_salto = 0
         self.tmp_velocidad_animacion = 0
         self.velocidad = 4
+        self.energia = 100
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
