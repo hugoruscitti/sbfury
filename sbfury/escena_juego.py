@@ -14,19 +14,23 @@ from pilas.escenas import Normal
 class EscenaJuego(Normal):
 
     def __init__(self):
-        print "comenzando la escena de juego..."
         self.lista_enemigos = []
-        s = shaolin.Shaolin(self.lista_enemigos)
-        self._crear_eventos_personalizados()
-        self.lista_enemigos.append(enemigos.Red(s))
-        escenario.Escenario(s)
+        self.shaolin = shaolin.Shaolin(self.lista_enemigos)
 
+        self._crear_eventos_personalizados()
+        self._crear_enemigos()
+        self._crear_escenario()
         self._crear_barras_de_energia()
+
+    def _crear_escenario(self):
+        escenario.Escenario(self.shaolin)
+
+    def _crear_enemigos(self):
+        self.lista_enemigos.append(enemigos.Red(self.shaolin))
 
     def _crear_barras_de_energia(self):
         energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
         energia_enemigo = pilas.actores.Energia(x=310, y=213, alto=20)
-        energia_enemigo.progreso = 100 
 
         def actualizar_energia_enemigo(evento):
             energia_enemigo.progreso = evento.quien.energia
@@ -35,7 +39,3 @@ class EscenaJuego(Normal):
 
     def _crear_eventos_personalizados(self):
         pilas.eventos.se_golpea_a_enemigo = pilas.eventos.Evento(['quien', 'energia'])
-
-
-
-

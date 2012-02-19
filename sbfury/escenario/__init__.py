@@ -25,11 +25,9 @@ class Escenario:
 
             self.capas.append(capa)
 
-        #pilas.mundo.camara.x = [1000], 20
-
         self.shaolin = shaolin
         self.cargar_temporizador()
-        self.crear_capas()
+        self._crear_capas()
 
     def cargar_temporizador(self):
         pilas.mundo.tareas.siempre(0.1, self.mover_camara)
@@ -40,11 +38,9 @@ class Escenario:
             camara.x = [self.shaolin.x - 100], 0.1
 
 
-    def crear_capas(self):
+    def _crear_capas(self):
         fondo = pilas.fondos.Desplazamiento()
         fondo.agregar(self.capas[0], (1793)/(5300.0 + 640))
         fondo.agregar(self.capas[1], 0.5567)
         fondo.agregar(self.capas[2], 1)
         fondo.agregar(self.capas[3], 1)
-
-

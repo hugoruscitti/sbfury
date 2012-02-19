@@ -7,7 +7,8 @@
 import pilas
 import escena_juego
 
-pilas.iniciar(ancho=853, alto=480, usar_motor='qtgl', titulo="Shaolin's Blind Fury")
+titulo = "Shaolin's Blind Fury"
+pilas.iniciar(ancho=853, alto=480, usar_motor='qtgl', titulo=titulo)
 
 # Cargando la nueva escena.
 escena_juego.EscenaJuego()
