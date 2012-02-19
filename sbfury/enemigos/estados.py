@@ -41,7 +41,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         # Mira hacia el lado en donde recibe el golpe.
         self.enemigo.espejado = otro_actor.x < self.enemigo.x
 
-        if fuerte or self.enemigo.energia < 0:
+        if fuerte or self.enemigo.energia <= 0:
             self.enemigo.hacer(LoGolpeanFuerte())
         else:
             self.enemigo.hacer(LoGolpean())
@@ -156,7 +156,7 @@ class LoGolpeanFuerte(LoGolpean):
         self.enemigo.mover(self.velocidad_horizontal, 0)
 
     def terminar_caida(self):
-        if self.enemigo.energia < 0:
+        if self.enemigo.energia <= 0:
             self.enemigo.hacer(Morirse())
         else:
             self.enemigo.hacer(QuedarseEnElSuelo())

@@ -305,8 +305,6 @@ Por ejemplo, en el estado del shaolin ``Golpear``, se construye un
 objeto ``Golpe`` y luego se consulta por las colisiones en el método
 actualizar.
 
-
-
 .. code-block:: python
 
     class Golpear(Comportamiento):
