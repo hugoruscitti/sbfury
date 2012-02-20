@@ -7,7 +7,7 @@ import pilas
 
 class Escenario:
 
-    def __init__(self, shaolin):
+    def __init__(self, escena_juego):
         fondos = [
                     ("nivel1/layer_3.png", -320, 240, 500),
                     ("nivel1/layer_2.png", -320, 240, 450),
@@ -25,7 +25,8 @@ class Escenario:
 
             self.capas.append(capa)
 
-        self.shaolin = shaolin
+        self.escena_juego = escena_juego
+        self.shaolin = escena_juego.shaolin
         self.cargar_temporizador()
         self._crear_capas()
 
@@ -33,9 +34,15 @@ class Escenario:
         pilas.mundo.tareas.siempre(0.1, self.mover_camara)
 
     def mover_camara(self):
-        camara = pilas.mundo.camara
-        if camara.x + 100 < self.shaolin.x:
-            camara.x = [self.shaolin.x - 100], 0.1
+        if not self._esta_bloqueada():
+            camara = pilas.mundo.camara
+
+            if camara.x + 100 < self.shaolin.x:
+                camara.x = [self.shaolin.x - 100], 0.1
+
+    def _esta_bloqueada(self):
+        """Retorna True si la camara tiene que permanecer estática."""
+        return False
 
 
     def _crear_capas(self):

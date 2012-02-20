@@ -24,14 +24,14 @@ class EscenaJuego(Normal):
         self._crear_escenario()
 
     def _crear_escenario(self):
-        escenario.Escenario(self.shaolin)
+        escenario.Escenario(self)
 
     def _crear_enemigos(self):
         self.lista_enemigos.append(enemigos.Red(self.shaolin))
 
     def _crear_barras_de_energia(self):
         self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
-        self.energia_enemigo = pilas.actores.Energia(x=310, y=213, alto=20)
+        self.energia_enemigo = pilas.actores.Energia(x=+315, y=213, alto=20)
 
         pilas.eventos.se_golpea_a_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
         pilas.eventos.se_golpea_a_enemigo.conectar(self.actualizar_energia_enemigo)
