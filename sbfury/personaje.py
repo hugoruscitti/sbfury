@@ -32,12 +32,16 @@ class Personaje(pilas.actores.Actor):
         self.y += y * self.velocidad
 
         # acota 'y' a valores entre -230 y 5
-        self.y = min(max(-250, self.y), 5)
+        self.y = self._aplicar_limites(self.y, -250, 5)
         self.z = self.y
 
         # aplica un limite horizontal para que el personaje
         # no pueda salir de la zona visible de la camara
-        self.x = max(self.x, pilas.mundo.camara.x - 400)
+        centro = pilas.mundo.camara.x
+        self.x = self._aplicar_limites(self.x, centro - 430, centro + 430)
+
+    def _aplicar_limites(self, valor, minimo, maximo):
+        return min(max(minimo, valor), maximo)
 
     def dibujar(self, applicacion):
         """Redefine la forma de dibujar al actor para que se puede despegar
