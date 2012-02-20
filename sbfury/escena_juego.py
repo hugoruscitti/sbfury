@@ -11,16 +11,17 @@ import escenario
 
 from pilas.escenas import Normal
 
+
 class EscenaJuego(Normal):
 
     def __init__(self):
+        Normal.__init__(self)
         self.lista_enemigos = []
-        self.shaolin = shaolin.Shaolin(self.lista_enemigos)
+        self._crear_barras_de_energia()
 
-        self._crear_eventos_personalizados()
+        self.shaolin = shaolin.Shaolin(self.lista_enemigos)
         self._crear_enemigos()
         self._crear_escenario()
-        self._crear_barras_de_energia()
 
     def _crear_escenario(self):
         escenario.Escenario(self.shaolin)
@@ -29,13 +30,11 @@ class EscenaJuego(Normal):
         self.lista_enemigos.append(enemigos.Red(self.shaolin))
 
     def _crear_barras_de_energia(self):
-        energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
-        energia_enemigo = pilas.actores.Energia(x=310, y=213, alto=20)
+        self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
+        self.energia_enemigo = pilas.actores.Energia(x=310, y=213, alto=20)
 
-        def actualizar_energia_enemigo(evento):
-            energia_enemigo.progreso = evento.quien.energia
+        pilas.eventos.se_golpea_a_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
+        pilas.eventos.se_golpea_a_enemigo.conectar(self.actualizar_energia_enemigo)
 
-        pilas.eventos.se_golpea_a_enemigo.conectar(actualizar_energia_enemigo)
-
-    def _crear_eventos_personalizados(self):
-        pilas.eventos.se_golpea_a_enemigo = pilas.eventos.Evento(['quien', 'energia'])
+    def actualizar_energia_enemigo(self, evento):
+        self.energia_enemigo.progreso = evento.quien.energia
