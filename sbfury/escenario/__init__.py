@@ -3,9 +3,16 @@
 #
 # Copyright: Hugo Ruscitti
 # Web: www.losersjuegos.com.ar
+
 import pilas
+import enemigos
 
 class Escenario:
+    """Controla la apariencia del escenario y el desplazamiengo de cámara.
+
+    El escenario se va moviendo a medida que el protagonista avanza, y
+    en determinados puntos del escenario construye nuevo enemigos.
+    """
 
     def __init__(self, escena_juego):
         fondos = [
@@ -30,6 +37,12 @@ class Escenario:
         self.cargar_temporizador()
         self._crear_capas()
 
+        self.enemigos = [
+            (500, enemigos.Red, 500 - 500, -150),
+            (500, enemigos.Red, 500 + 500, -100),
+            (500, enemigos.Red, 500 + 500, -200),
+        ]
+
     def cargar_temporizador(self):
         pilas.mundo.tareas.siempre(0.1, self.mover_camara)
 
@@ -40,10 +53,22 @@ class Escenario:
             if camara.x + 100 < self.shaolin.x:
                 camara.x = [self.shaolin.x - 100], 0.1
 
+            self._procesar_creacion_de_enemigos(camara.x)
+
+    def _procesar_creacion_de_enemigos(self, camara_x):
+        a_eliminar = []
+        for (x_creacion, clase, x, y) in self.enemigos:
+            if camara_x >= x_creacion:
+                self.escena_juego.crear_enemigo(clase, x, y)
+                a_eliminar.append((x_creacion, clase, x, y))
+
+        if a_eliminar:
+            for x in a_eliminar:
+                self.enemigos.remove(x)
+
     def _esta_bloqueada(self):
         """Retorna True si la camara tiene que permanecer estática."""
         return self.escena_juego.cantidad_de_enemigos > 0
-
 
     def _crear_capas(self):
         fondo = pilas.fondos.Desplazamiento()

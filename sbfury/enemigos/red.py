@@ -12,14 +12,14 @@ import estados
 class Red(enemigo.Enemigo):
     """El Ninja de color rojo"""
 
-    def __init__(self, shaolin):
+    def __init__(self, shaolin, x, y):
         enemigo.Enemigo.__init__(self)
         self.shaolin = shaolin
         self._cargar_animaciones()
         self.z = 0
         self.centro = ("centro", "abajo")
-        self.x = 200
-        self.y = -100
+        self.x = x
+        self.y = y
         self.altura_del_salto = 0
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
@@ -35,6 +35,7 @@ class Red(enemigo.Enemigo):
         self.comportamiento_ai_indice = 0
         self.pasar_al_siguiente_estado_ai()
         self.mover(0, 0)
+        self.energia = 2
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)

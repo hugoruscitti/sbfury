@@ -6,33 +6,34 @@
 
 import pilas
 import shaolin
-import enemigos
 import escenario
 
 from pilas.escenas import Normal
 
 
 class EscenaJuego(Normal):
+    """Representa la escena de juego en donde el shaolin va luchando."""
 
     def __init__(self):
         Normal.__init__(self)
         self.lista_enemigos = []
-        self.cantidad_de_enemigos = 1
+        self.cantidad_de_enemigos = 0
 
         self._crear_barras_de_energia()
 
         self.shaolin = shaolin.Shaolin(self.lista_enemigos)
-        self._crear_enemigos()
+
+        pilas.eventos.se_muere_un_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
+        pilas.eventos.se_muere_un_enemigo.conectar(self._cuando_mueve_un_enemigo)
+
         self._crear_escenario()
 
     def _crear_escenario(self):
         escenario.Escenario(self)
 
-    def _crear_enemigos(self):
-        pilas.eventos.se_muere_un_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
-        pilas.eventos.se_muere_un_enemigo.conectar(self._cuando_mueve_un_enemigo)
-
-        self.lista_enemigos.append(enemigos.Red(self.shaolin))
+    def crear_enemigo(self, clase, x, y):
+        self.lista_enemigos.append(clase(self.shaolin, x=x, y=y))
+        self.cantidad_de_enemigos += 1
 
     def _cuando_mueve_un_enemigo(self, evento):
         #actor_que_muere = evento.actor
