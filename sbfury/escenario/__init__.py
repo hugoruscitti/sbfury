@@ -42,7 +42,7 @@ class Escenario:
 
     def _esta_bloqueada(self):
         """Retorna True si la camara tiene que permanecer estática."""
-        return False
+        return self.escena_juego.cantidad_de_enemigos > 0
 
 
     def _crear_capas(self):

@@ -242,6 +242,7 @@ class Morirse(Comportamiento):
         self.enemigo.cambiar_animacion('lo_golpean_fuerte')
         self.enemigo.definir_cuadro(1)
         self.enemigo.puede_ser_golpeado = False
+        pilas.eventos.se_muere_un_enemigo.emitir(actor=self)
 
     def actualizar(self):
         Comportamiento.actualizar(self)

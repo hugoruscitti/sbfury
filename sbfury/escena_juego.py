@@ -17,6 +17,8 @@ class EscenaJuego(Normal):
     def __init__(self):
         Normal.__init__(self)
         self.lista_enemigos = []
+        self.cantidad_de_enemigos = 1
+
         self._crear_barras_de_energia()
 
         self.shaolin = shaolin.Shaolin(self.lista_enemigos)
@@ -27,7 +29,14 @@ class EscenaJuego(Normal):
         escenario.Escenario(self)
 
     def _crear_enemigos(self):
+        pilas.eventos.se_muere_un_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
+        pilas.eventos.se_muere_un_enemigo.conectar(self._cuando_mueve_un_enemigo)
+
         self.lista_enemigos.append(enemigos.Red(self.shaolin))
+
+    def _cuando_mueve_un_enemigo(self, evento):
+        #actor_que_muere = evento.actor
+        self.cantidad_de_enemigos -= 1
 
     def _crear_barras_de_energia(self):
         self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
