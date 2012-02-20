@@ -35,7 +35,7 @@ class Red(enemigo.Enemigo):
         self.comportamiento_ai_indice = 0
         self.pasar_al_siguiente_estado_ai()
         self.mover(0, 0)
-        self.energia = 2
+        self.energia = 100
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)

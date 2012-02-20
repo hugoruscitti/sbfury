@@ -93,7 +93,7 @@ class LoGolpean(Comportamiento):
         self.contador = 20
 
         # emite evento para avisar que ha sido golpeado
-        enemigo.reducir_energia(5)
+        enemigo.reducir_energia(10)
 
 
     def actualizar(self):
@@ -131,7 +131,7 @@ class LoGolpeanFuerte(LoGolpean):
             self.velocidad_horizontal = -1.55
 
         # emite evento para avisar que ha sido golpeado
-        enemigo.reducir_energia(8)
+        enemigo.reducir_energia(20)
 
     def actualizar(self):
         self.enemigo.altura_del_salto += self.velocidad_inicial
