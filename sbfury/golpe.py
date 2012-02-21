@@ -43,8 +43,9 @@ class Golpe(pilas.actores.Actor):
                 if area[0] < self.x < area[1] and area[2] < self.y < area[3]:      
                     # verificando que están casi en el mismo plano z.
                     if abs(enemigo.y - self.actor.y) < 15:
-                        self.crear_efecto_de_golpe()
-                        return enemigo
+                        if enemigo.altura_del_salto < 80:
+                            self.crear_efecto_de_golpe()
+                            return enemigo
 
     def dibujar(self, aplicacion):
         if DEPURACION:
