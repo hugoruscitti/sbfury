@@ -35,6 +35,7 @@ class Shaolin(personaje.Personaje):
             "ataca3": cargar("shaolin/ataca1.png", 2),
             "ataca4": cargar("shaolin/ataca4.png", 4),
             "salta": cargar("shaolin/salta.png", 3),
+            "levantandose": cargar("shaolin/levantandose.png", 1),
             "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
             "es_golpeado": cargar("shaolin/es_golpeado.png", 2),
             "es_golpeado_fuerte": cargar("shaolin/es_golpeado_fuerte.png", 2),

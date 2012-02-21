@@ -358,8 +358,22 @@ class QuedarseEnElSuelo(Comportamiento):
             self.levantarse()
 
     def levantarse(self):
-        self.shaolin.puede_ser_golpeado = True
-        self.shaolin.hacer(Parado())
+        self.shaolin.hacer(Levantandose())
+
+
+class Levantandose(Comportamiento):
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion('levantandose')
+        self.contador = 0
+
+    def actualizar(self):
+        self.contador += 1
+
+        if self.contador > 10:
+            self.shaolin.puede_ser_golpeado = True
+            self.shaolin.hacer(Parado())
 
 class Morirse(QuedarseEnElSuelo):
 
