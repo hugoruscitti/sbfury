@@ -218,22 +218,30 @@ class LanzarEstrella(Comportamiento):
         self.enemigo.cambiar_animacion('lanzar')
         self.enemigo.mirar_al_shaolin()
 
-        if enemigo.espejado:
-            direccion = -1
-        else:
-            direccion = 1
 
-        estrella.Estrella(self.enemigo.x, self.enemigo.y, direccion, self.enemigo.shaolin)
         self.contador = 0
+
 
     def actualizar(self):
         Comportamiento.actualizar(self)
         self.enemigo.mirar_al_shaolin()
 
         self.contador += 1
+
+        if self.contador == 10:
+            self._lanzar_estrella()
+
+
         if self.contador > 30:
             self.enemigo.pasar_al_siguiente_estado_ai()
 
+    def _lanzar_estrella(self):
+        if self.enemigo.espejado:
+            direccion = -1
+        else:
+            direccion = 1
+
+        estrella.Estrella(self.enemigo.x, self.enemigo.y, direccion, self.enemigo.shaolin)
 
 class Morirse(Comportamiento):
 
@@ -262,6 +270,7 @@ class IngresarCajendo(Comportamiento):
 
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)
+        self.enemigo.mirar_al_shaolin()
         self.enemigo.puede_ser_golpeado = True
         self.enemigo.cambiar_animacion('saltando')
         self.enemigo.altura_del_salto = 400
