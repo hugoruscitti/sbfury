@@ -20,11 +20,9 @@ class EscenaJuego(Normal):
         self.cantidad_de_enemigos = 0
 
         self._crear_barras_de_energia()
-
         self.shaolin = shaolin.Shaolin(self.lista_enemigos)
 
         self._crear_eventos_personalizados()
-
         self._crear_escenario()
 
     def _crear_eventos_personalizados(self):
@@ -53,11 +51,23 @@ class EscenaJuego(Normal):
 
     def _cuando_muere_el_shaolin(self, evento):
         #referencia_al_shaolin_que_muere = evento.actor
+        self._crear_texto_game_over()
+        pilas.eventos.pulsa_tecla_escape.conectar(self._reiniciar_el_nivel)
+
+    def _reiniciar_el_nivel(self, evento):
+        EscenaJuego()
+
+    def _crear_texto_game_over(self):
         texto_game_over = pilas.actores.Texto("Game Over", magnitud=40)
         texto_game_over.z = -1000
         texto_game_over.escala = 0.1
         texto_game_over.escala = [1], 0.5
 
+        texto_continuar = pilas.actores.Texto("Pulse escape para reiniciar")
+        texto_continuar.y = -60
+        texto_continuar.transparencia = 100
+        texto_continuar.transparencia = [0]
+        texto_continuar.z = -1000
 
     def _crear_barras_de_energia(self):
         self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)

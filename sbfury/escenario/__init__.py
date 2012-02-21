@@ -42,6 +42,8 @@ class Escenario:
             (500, enemigos.Red, 500 - 500, -150),
             (500, enemigos.Red, 500 + 500, -100),
             (500, enemigos.Red, 500 + 500, -200),
+            (800, enemigos.Red, 800 + 500, -200),
+            (800, enemigos.Red, 880, -200),
         ]
 
     def cargar_temporizador(self):
