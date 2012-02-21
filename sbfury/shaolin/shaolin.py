@@ -38,6 +38,7 @@ class Shaolin(personaje.Personaje):
             "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
             "es_golpeado": cargar("shaolin/es_golpeado.png", 2),
             "es_golpeado_fuerte": cargar("shaolin/es_golpeado_fuerte.png", 2),
+            "en_el_suelo": cargar("shaolin/en_el_suelo.png", 1),
         }
 
     def cuando_pulsa_una_tecla(self, evento):

@@ -44,6 +44,15 @@ class Comportamiento(Comportamiento):
 
     def ha_sido_golpeado(self, otro_actor, fuerte):
         pass
+    
+    def _pasar_a_estado_golpeado(self):
+        self.eliminar_golpe()
+
+        if self.shaolin.energia <= 0:
+            self.shaolin.hacer(LoGolpeanFuerte())
+        else:
+            self.shaolin.hacer(LoGolpean())
+
 
 class Parado(Comportamiento):
 
@@ -65,7 +74,7 @@ class Parado(Comportamiento):
         self.shaolin.hacer(Saltar())
 
     def ha_sido_golpeado(self, otro_actor, fuerte):
-        self.shaolin.hacer(LoGolpean())
+        self._pasar_a_estado_golpeado()
 
 class Caminar(Comportamiento):
 
@@ -109,7 +118,7 @@ class Caminar(Comportamiento):
         self.shaolin.hacer(SaltarCaminando(direccion))
 
     def ha_sido_golpeado(self, otro_actor, fuerte):
-        self.shaolin.hacer(LoGolpean())
+        self._pasar_a_estado_golpeado()
 
 class Golpear(Comportamiento):
     # indica si al tirar el golpe a logrado dar con el enemigo.
@@ -156,7 +165,7 @@ class Golpear(Comportamiento):
                     Golpear.ha_golpeado =False
 
     def ha_sido_golpeado(self, otro_actor, fuerte):
-        self.shaolin.hacer(LoGolpean())
+        self._pasar_a_estado_golpeado()
 
 
 class Saltar(Comportamiento):
@@ -187,6 +196,10 @@ class Saltar(Comportamiento):
     def pulsa_golpear(self):
         self.shaolin.hacer(GolpearSaltando(self.velocidad_inicial, 0))
 
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.eliminar_golpe()
+        self.shaolin.hacer(LoGolpeanFuerte())
+
 class SaltarCaminando(Saltar):
 
     def __init__(self, direccion):
@@ -199,6 +212,10 @@ class SaltarCaminando(Saltar):
 
     def pulsa_golpear(self):
         self.shaolin.hacer(GolpearSaltando(self.velocidad_inicial, self.direccion))
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.eliminar_golpe()
+        self.shaolin.hacer(LoGolpeanFuerte())
 
 class GolpearSaltando(Saltar):
 
@@ -242,6 +259,9 @@ class GolpearSaltando(Saltar):
         if self.contador >= 5:
             self.eliminar_golpe()
 
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.eliminar_golpe()
+        self.shaolin.hacer(LoGolpeanFuerte())
 
 class LoGolpean(Comportamiento):
 
@@ -272,4 +292,80 @@ class LoGolpean(Comportamiento):
             self.contador -= 1
         
     def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        pass
+
+
+class LoGolpeanFuerte(LoGolpean):
+
+    def iniciar(self, shaolin):
+        LoGolpean.iniciar(self, shaolin)
+        self.shaolin.puede_ser_golpeado = False
+        self.shaolin.cambiar_animacion('es_golpeado_fuerte')
+        self.velocidad_general = 14
+        self.velocidad_inicial = self.velocidad_general
+
+        if self.shaolin.espejado:
+            self.velocidad_horizontal = 1.55
+        else:
+            self.velocidad_horizontal = -1.55
+
+        # emite evento para avisar que ha sido golpeado
+        shaolin.reducir_energia(20)
+
+    def actualizar(self):
+        self.shaolin.altura_del_salto += self.velocidad_inicial
+        self.velocidad_inicial -= 0.75
+
+        if self.shaolin.altura_del_salto < 30:
+            # Si está cerca del suelo se muestra acostado.
+            self.shaolin.definir_cuadro(1)
+        else:
+            self.shaolin.definir_cuadro(0)
+
+        if self.shaolin.altura_del_salto < 0:
+            # Si toca el suelo rebota con menos intensidad.
+            self.velocidad_horizontal /= 1.5
+            self.velocidad_general -= 4
+            self.velocidad_inicial = self.velocidad_general
+            self.altura_del_salto = 0
+
+            if self.velocidad_general < 0:
+                self.terminar_caida()
+
+        self.shaolin.mover(self.velocidad_horizontal, 0)
+
+    def terminar_caida(self):
+        if self.shaolin.energia <= 0:
+            self.shaolin.hacer(Morirse())
+        else:
+            self.shaolin.hacer(QuedarseEnElSuelo())
+
+
+class QuedarseEnElSuelo(Comportamiento):
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion('en_el_suelo')
+        self.shaolin.definir_cuadro(0)
+        self.contador = 60
+        self.shaolin.puede_ser_golpeado = False
+
+    def actualizar(self):
+        self.shaolin.definir_cuadro(0)
+        self.contador -= 1
+
+        if self.contador < 0:
+            self.levantarse()
+
+    def levantarse(self):
+        self.shaolin.puede_ser_golpeado = True
+        self.shaolin.hacer(Parado())
+
+class Morirse(QuedarseEnElSuelo):
+
+    def iniciar(self, shaolin):
+        QuedarseEnElSuelo.iniciar(self, shaolin)
+        pilas.eventos.se_muere_el_shaolin.emitir(actor=shaolin)
+
+    def actualizar(self):
         pass

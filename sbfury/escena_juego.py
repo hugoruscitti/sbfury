@@ -37,6 +37,9 @@ class EscenaJuego(Normal):
         pilas.eventos.se_muere_un_enemigo = pilas.eventos.Evento("se_muere_un_enemigo")
         pilas.eventos.se_muere_un_enemigo.conectar(self._cuando_muere_un_enemigo)
 
+        pilas.eventos.se_muere_el_shaolin = pilas.eventos.Evento("se_muere_el_shaolin")
+        pilas.eventos.se_muere_el_shaolin.conectar(self._cuando_muere_el_shaolin)
+
     def _crear_escenario(self):
         escenario.Escenario(self)
 
@@ -48,6 +51,14 @@ class EscenaJuego(Normal):
         #actor_que_muere = evento.actor
         self.cantidad_de_enemigos -= 1
 
+    def _cuando_muere_el_shaolin(self, evento):
+        #referencia_al_shaolin_que_muere = evento.actor
+        texto_game_over = pilas.actores.Texto("Game Over", magnitud=40)
+        texto_game_over.z = -1000
+        texto_game_over.escala = 0.1
+        texto_game_over.escala = [1], 0.5
+
+
     def _crear_barras_de_energia(self):
         self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
         self.energia_enemigo = pilas.actores.Energia(x=+315, y=213, alto=20)
@@ -57,4 +68,3 @@ class EscenaJuego(Normal):
 
     def actualizar_energia_shaolin(self, evento):
         self.energia_shaolin.progreso = evento.quien.energia
- 
