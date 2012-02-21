@@ -14,8 +14,7 @@ class Enemigo(personaje.Personaje):
         self.imagen = "red/parado.png"
         self.velocidad = 2
 
-
     def reducir_energia(self, cantidad):
         "Reduce la energia del enemigo y emite evento avisando a la barra de energia."
         self.energia -= cantidad
-        #pilas.eventos.se_golpea_a_enemigo.emitir(quien=self)
+        pilas.eventos.se_golpea_a_enemigo.emitir(quien=self)
