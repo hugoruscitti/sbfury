@@ -257,3 +257,20 @@ class Morirse(Comportamiento):
     def eliminar_actor_del_escenario(self):
         self.enemigo.sombra.eliminar()
         self.enemigo.eliminar()
+
+class IngresarCajendo(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.puede_ser_golpeado = True
+        self.enemigo.cambiar_animacion('saltando')
+        self.enemigo.altura_del_salto = 400
+        self.velocidad_inicial = 0
+
+    def actualizar(self):
+        self.enemigo.altura_del_salto += self.velocidad_inicial
+        self.velocidad_inicial -= 0.75
+
+        if self.enemigo.altura_del_salto < 0:
+            self.enemigo.altura_del_salto = 0
+            self.enemigo.pasar_al_siguiente_estado_ai()

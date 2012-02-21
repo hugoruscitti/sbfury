@@ -15,3 +15,5 @@ class Sombra(pilas.actores.Actor):
     def actualizar_posicion(self, x, y, altura):
         self.x, self.y = x, y
         self.escala = -0.003 * altura + 1
+        if altura > 300:
+            self.escala = 0.0001

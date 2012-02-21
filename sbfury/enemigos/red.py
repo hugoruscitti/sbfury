@@ -5,7 +5,6 @@
 # Web: www.losersjuegos.com.ar
 
 import pilas
-import sombra
 import enemigo
 import estados
 
@@ -22,7 +21,6 @@ class Red(enemigo.Enemigo):
         self.y = y
         self.altura_del_salto = 0
         self.actualizar()
-        self.aprender(pilas.habilidades.Arrastrable)
 
         # inicia la lista de comportamientos para inteligencia artificia (AI)
         self.comportamientos_ai = [
@@ -33,7 +31,9 @@ class Red(enemigo.Enemigo):
                     estados.CaminaHaciaLineaVerticalDelShaolin(segundos=1),
                     ]
         self.comportamiento_ai_indice = 0
-        self.pasar_al_siguiente_estado_ai()
+
+        self.hacer(estados.IngresarCajendo())
+        #self.pasar_al_siguiente_estado_ai()
         self.mover(0, 0)
         self.energia = 100
 
@@ -60,6 +60,7 @@ class Red(enemigo.Enemigo):
                 'lo_golpean_fuerte': cargar("red/lo_golpean_fuerte.png", 2),
                 'caminar': cargar("red/caminar.png", 4),
                 'lanzar': cargar("red/lanzar.png", 4),
+                'saltando': cargar("red/saltando.png", 1),
             }
 
     def mirar_al_shaolin(self):
