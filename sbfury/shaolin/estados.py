@@ -5,8 +5,10 @@
 # Web: www.losersjuegos.com.ar
 import pilas
 import golpe
+import random
+from pilas.comportamientos import Comportamiento
 
-class Comportamiento(pilas.comportamientos.Comportamiento):
+class Comportamiento(Comportamiento):
     """Representa una accion que puede realizar el shaolin, cómo
     caminar, saltar, golpear etc...
 
@@ -40,7 +42,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
     def ha_golpeado(self, otro_actor):
         pass
 
-    def ha_sido_golpeado(self, otro_actor):
+    def ha_sido_golpeado(self, otro_actor, fuerte):
         pass
 
 class Parado(Comportamiento):
@@ -61,6 +63,9 @@ class Parado(Comportamiento):
 
     def pulsa_saltar(self):
         self.shaolin.hacer(Saltar())
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.shaolin.hacer(LoGolpean())
 
 class Caminar(Comportamiento):
 
@@ -102,6 +107,9 @@ class Caminar(Comportamiento):
             direccion = 0
 
         self.shaolin.hacer(SaltarCaminando(direccion))
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.shaolin.hacer(LoGolpean())
 
 class Golpear(Comportamiento):
     # indica si al tirar el golpe a logrado dar con el enemigo.
@@ -146,6 +154,9 @@ class Golpear(Comportamiento):
                     Golpear.ha_golpeado = True
                 else:
                     Golpear.ha_golpeado =False
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self.shaolin.hacer(LoGolpean())
 
 
 class Saltar(Comportamiento):
@@ -230,3 +241,35 @@ class GolpearSaltando(Saltar):
 
         if self.contador >= 5:
             self.eliminar_golpe()
+
+
+class LoGolpean(Comportamiento):
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion('es_golpeado')
+        self.x_inicial = self.shaolin.x
+        self.y_inicial = self.shaolin.y
+        self.contador = 20
+
+        # emite evento para avisar que ha sido golpeado
+        shaolin.reducir_energia(10)
+
+    def actualizar(self):
+
+        x = self.x_inicial
+        y = self.y_inicial
+
+        self.shaolin.x = random.choice([x - 1, x, x + 1])
+        self.shaolin.y = random.choice([y - 1, y, y + 1])
+
+        # timeout para regresar al estado parado:
+        if self.contador < 0:
+            self.shaolin.x = self.x_inicial
+            self.shaolin.y = self.y_inicial
+            self.shaolin.hacer(Parado())
+        else:
+            self.contador -= 1
+        
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        pass

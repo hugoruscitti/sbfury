@@ -28,7 +28,6 @@ class Golpe(pilas.actores.Actor):
 
         self.y = self.actor.y + self.actor.altura_del_salto + self.dy
 
-
     def verificar_colisiones(self):
         for enemigo in self.enemigos:
 

@@ -42,8 +42,12 @@ class Estrella(enemigo.Enemigo):
         if self.esta_fuera_de_la_pantalla():
             self.eliminar_todo()
 
-        if self.golpe and self.golpe.verificar_colisiones():
-            self.eliminar_todo()
+        if self.golpe:
+            shaolin_que_ha_golpeado = self.golpe.verificar_colisiones()
+
+            if shaolin_que_ha_golpeado:
+                shaolin_que_ha_golpeado.ha_sido_golpeado(self, False)
+                self.eliminar_todo()
 
 
     def eliminar_todo(self):

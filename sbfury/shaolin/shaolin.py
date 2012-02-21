@@ -36,6 +36,8 @@ class Shaolin(personaje.Personaje):
             "ataca4": cargar("shaolin/ataca4.png", 4),
             "salta": cargar("shaolin/salta.png", 3),
             "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
+            "es_golpeado": cargar("shaolin/es_golpeado.png", 2),
+            "es_golpeado_fuerte": cargar("shaolin/es_golpeado_fuerte.png", 2),
         }
 
     def cuando_pulsa_una_tecla(self, evento):
@@ -52,3 +54,11 @@ class Shaolin(personaje.Personaje):
         
     def reproducir_sonido(self, nombre):
         self.sonidos[nombre].reproducir()
+
+    def ha_sido_golpeado(self, quien, fuerte=False):
+        self.comportamiento_actual.ha_sido_golpeado(quien, fuerte)
+
+    def reducir_energia(self, cantidad):
+        "Reduce la energia del shaolin y emite evento avisando a la barra de energia."
+        self.energia -= cantidad
+        #pilas.eventos.se_golpea_a_enemigo.emitir(quien=self)

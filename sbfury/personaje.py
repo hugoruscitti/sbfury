@@ -77,3 +77,6 @@ class Personaje(pilas.actores.Actor):
         self.animaciones = {
                 # 'animacion': cargar("archivo.png", 3),
             }
+
+    def ha_sido_golpeado(self, quien, fuerte=False):
+        self.comportamiento_actual.ha_sido_golpeado(quien, fuerte)
