@@ -38,6 +38,7 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
+            (0, enemigos.Red, 110 - 500, -200),
             (500, enemigos.Red, 500 - 500, -150),
             (500, enemigos.Red, 500 + 500, -100),
             (500, enemigos.Red, 500 + 500, -200),

@@ -11,7 +11,7 @@ import random
 class Golpe(pilas.actores.Actor):
     """Representa un golpe (invisible) que un actor emite a otro."""
 
-    def __init__(self, actor, estado, enemigos, dx, dy):
+    def __init__(self, actor, enemigos, dx, dy):
         pilas.actores.Actor.__init__(self)
         self.imagen = 'colision.png'
         self.actor = actor

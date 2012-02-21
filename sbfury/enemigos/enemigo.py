@@ -10,7 +10,6 @@ import personaje
 class Enemigo(personaje.Personaje):
 
     def __init__(self):
-        self.puede_ser_golpeado = True
         personaje.Personaje.__init__(self)
         self.imagen = "red/parado.png"
         self.velocidad = 2

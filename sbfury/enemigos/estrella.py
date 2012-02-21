@@ -7,6 +7,7 @@
 import pilas
 import enemigo
 import random
+import golpe
 
 class Estrella(enemigo.Enemigo):
     """Una estrella ninja que vuela intentando golpear al shaolin."""
@@ -19,6 +20,7 @@ class Estrella(enemigo.Enemigo):
         self.x = x
         self.y = y
         self.altura_del_salto = 100
+        self.golpe = golpe.Golpe(self, [shaolin], -65, 0)
         self.direccion = direccion
         self.actualizar()
         self.aprender(pilas.habilidades.Arrastrable)
@@ -38,5 +40,18 @@ class Estrella(enemigo.Enemigo):
         self.sombra.escala = 0.5
 
         if self.esta_fuera_de_la_pantalla():
-            self.eliminar()
-            self.sombra.eliminar()
+            self.eliminar_todo()
+
+        if self.golpe and self.golpe.verificar_colisiones():
+            self.eliminar_todo()
+
+
+    def eliminar_todo(self):
+        self.eliminar()
+        self.sombra.eliminar()
+        self.eliminar_golpe()
+
+    def eliminar_golpe(self):
+        if self.golpe:
+            self.golpe.eliminar()
+            self.golpe = None

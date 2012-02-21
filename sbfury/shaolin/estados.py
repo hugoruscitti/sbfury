@@ -30,7 +30,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         pass
 
     def golpear(self, dx=0, dy=40):
-        self.golpe = golpe.Golpe(self.shaolin, self, self.shaolin.enemigos, dx, dy)
+        self.golpe = golpe.Golpe(self.shaolin, self.shaolin.enemigos, dx, dy)
 
     def eliminar_golpe(self):
         if self.golpe:

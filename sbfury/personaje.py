@@ -19,6 +19,7 @@ class Personaje(pilas.actores.Actor):
         self.tmp_velocidad_animacion = 0
         self.velocidad = 4
         self.energia = 100
+        self.puede_ser_golpeado = True
 
     def actualizar(self):
         pilas.actores.Actor.actualizar(self)
