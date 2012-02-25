@@ -15,6 +15,7 @@ class Escenario:
     """
 
     def __init__(self, escena_juego):
+        self.bloqueada = False
         fondos = [
                     ("nivel1/layer_3.png", -320, 240, 500),
                     ("nivel1/layer_2.png", -320, 240, 450),
@@ -38,12 +39,13 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
-            (0, enemigos.Red, 110 - 500, -200),
-            (500, enemigos.Red, 500 - 500, -150),
-            (500, enemigos.Red, 500 + 500, -100),
-            (500, enemigos.Red, 500 + 500, -200),
-            (800, enemigos.Red, 800 + 500, -200),
-            (800, enemigos.Red, 880, -200),
+            (0, CrearEnemigo(enemigos.Red, 110 - 500, -200)),
+            (0, PausaHastaEliminarEnemigos()),
+            (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
+            (500, CrearEnemigo(enemigos.Red, 500 + 500, -100)),
+            (500, CrearEnemigo(enemigos.Red, 500 + 500, -200)),
+            (800, CrearEnemigo(enemigos.Red, 800 + 500, -200)),
+            (800, CrearEnemigo(enemigos.Red, 880, -200)),
         ]
 
     def cargar_temporizador(self):
@@ -60,10 +62,11 @@ class Escenario:
 
     def _procesar_creacion_de_enemigos(self, camara_x):
         a_eliminar = []
-        for (x_creacion, clase, x, y) in self.enemigos:
+
+        for x_creacion, item in self.enemigos:
             if camara_x >= x_creacion:
-                self.escena_juego.crear_enemigo(clase, x, y)
-                a_eliminar.append((x_creacion, clase, x, y))
+                item.ejecutar(self)
+                a_eliminar.append((x_creacion, item))
 
         if a_eliminar:
             for x in a_eliminar:
@@ -71,7 +74,11 @@ class Escenario:
 
     def _esta_bloqueada(self):
         """Retorna True si la camara tiene que permanecer estática."""
-        return self.escena_juego.cantidad_de_enemigos > 0
+        if self.bloqueada:
+            if self.escena_juego.cantidad_de_enemigos == 0:
+                self.bloqueada = False
+
+        return self.bloqueada
 
     def _crear_capas(self):
         fondo = pilas.fondos.Desplazamiento()
@@ -79,3 +86,34 @@ class Escenario:
         fondo.agregar(self.capas[1], 0.5567)
         fondo.agregar(self.capas[2], 1)
         fondo.agregar(self.capas[3], 1)
+
+    def bloquear_camara(self):
+        self.bloqueada = True
+
+
+class Item:
+    """Representa un elemento del escenario que se tiene que construir."""
+
+    def ejecutar(self):
+        raise Exception("Metodo no implementado")
+
+class CrearEnemigo(Item):
+    """Representa al creación de un enemigo."""
+
+    def __init__(self, clase_enemigo, x, y):
+        self.clase_enemigo = clase_enemigo
+        self.x = x
+        self.y = y
+
+    def ejecutar(self, escenario):
+        escenario.escena_juego.crear_enemigo(self.clase_enemigo, self.x, self.y)
+
+class PausaHastaEliminarEnemigos(Item):
+    """Realiza una bloqueo del desplazamiento de camara en el escenario.
+
+    Este bloqueo de desplazamiento queda activo hasta que se logren
+    eliminar a todos los enemigos que existan en la pantalla."""
+
+    def ejecutar(self, escenario):
+        print "bloqueando la escena."
+        escenario.bloquear_camara()
