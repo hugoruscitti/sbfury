@@ -266,7 +266,7 @@ class Morirse(Comportamiento):
         self.enemigo.sombra.eliminar()
         self.enemigo.eliminar()
 
-class IngresarCajendo(Comportamiento):
+class IngresarCayendo(Comportamiento):
 
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)

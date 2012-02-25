@@ -23,6 +23,13 @@ class Red(enemigo.Enemigo):
         self.actualizar()
 
         # inicia la lista de comportamientos para inteligencia artificia (AI)
+        self._iniciar()
+        #self.pasar_al_siguiente_estado_ai()
+        self.mover(0, 0)
+        self.energia = 100
+
+    def _iniciar(self):
+        # inicia la lista de comportamientos para inteligencia artificia (AI)
         self.comportamientos_ai = [
                     estados.Parado(segundos=1),
                     estados.LanzarEstrella(),
@@ -32,10 +39,7 @@ class Red(enemigo.Enemigo):
                     ]
         self.comportamiento_ai_indice = 0
 
-        self.hacer(estados.IngresarCajendo())
-        #self.pasar_al_siguiente_estado_ai()
-        self.mover(0, 0)
-        self.energia = 100
+        self.hacer(estados.IngresarCayendo())
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)

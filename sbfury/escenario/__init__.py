@@ -39,7 +39,7 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
-            (0, CrearEnemigo(enemigos.Red, 110 - 500, -200)),
+            (0, CrearEnemigo(enemigos.Hannia, 110 - 500, -200)),
             (0, PausaHastaEliminarEnemigos()),
             (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
             (500, CrearEnemigo(enemigos.Red, 500 + 500, -100)),
@@ -115,5 +115,4 @@ class PausaHastaEliminarEnemigos(Item):
     eliminar a todos los enemigos que existan en la pantalla."""
 
     def ejecutar(self, escenario):
-        print "bloqueando la escena."
         escenario.bloquear_camara()
