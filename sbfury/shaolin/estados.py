@@ -66,6 +66,7 @@ class Parado(Comportamiento):
 
         if self.control.arriba or self.control.abajo:
             self.shaolin.hacer(Caminar())
+        self.shaolin.avanzar_animacion(0.1)
 
     def pulsa_golpear(self):
         self.shaolin.hacer(Golpear())
