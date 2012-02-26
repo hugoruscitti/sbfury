@@ -167,9 +167,7 @@ class LoGolpean(Comportamiento):
         # emite evento para avisar que ha sido golpeado
         enemigo.reducir_energia(10)
 
-
     def actualizar(self):
-
         x = self.x_inicial
         y = self.y_inicial
 
@@ -180,7 +178,7 @@ class LoGolpean(Comportamiento):
         if self.contador < 0:
             self.enemigo.x = self.x_inicial
             self.enemigo.y = self.y_inicial
-            self.enemigo.pasar_al_siguiente_estado_ai()
+            self.enemigo.cargar_primer_estado_ai()
         else:
             self.contador -= 1
         
@@ -251,9 +249,7 @@ class QuedarseEnElSuelo(Comportamiento):
 
     def levantarse(self):
         self.enemigo.puede_ser_golpeado = True
-        self.enemigo.pasar_al_siguiente_estado_ai()
-
-
+        self.enemigo.cargar_primer_estado_ai()
 
 class CaminaHaciaLineaVerticalDelShaolin(Comportamiento):
 

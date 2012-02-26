@@ -58,6 +58,10 @@ class Red(enemigo.Enemigo):
         estado_nuevo = self.comportamientos_ai[self.comportamiento_ai_indice]
         self.hacer(estado_nuevo)
 
+    def cargar_primer_estado_ai(self):
+        self.comportamiento_ai_indice = -1
+        self.pasar_al_siguiente_estado_ai()
+
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla
         self.animaciones = {
