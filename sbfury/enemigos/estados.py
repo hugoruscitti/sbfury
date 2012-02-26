@@ -7,6 +7,7 @@ import pilas
 import random
 import estrella
 import golpe
+import enemigos
 
 
 class Comportamiento(pilas.comportamientos.Comportamiento):
@@ -64,6 +65,59 @@ class Parado(Comportamiento):
         Comportamiento.actualizar(self)
         self.enemigo.mirar_al_shaolin()
 
+class CajaEnReposo(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+
+    def actualizar(self):
+        pass
+
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        self.enemigo.espejado = otro_actor.x > self.enemigo.x
+        self.enemigo.reducir_energia(70)
+        self.enemigo.hacer(CajaGolpeada())
+
+class CajaGolpeada(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        self.enemigo.definir_cuadro(1)
+
+    def actualizar(self):
+        pass
+
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        self.enemigo.espejado = otro_actor.x > self.enemigo.x
+        self.enemigo.reducir_energia(70)
+        self.enemigo.hacer(CajaExplotando())
+
+class CajaExplotando(Comportamiento):
+
+    def iniciar(self, enemigo):
+        Comportamiento.iniciar(self, enemigo)
+        enemigo.reducir_energia(70)
+        self.enemigo.eliminar()
+        self.enemigo.sombra.eliminar()
+        x, y = self.enemigo.x, self.enemigo.y
+
+        if self.enemigo.espejado:
+            dx = -1
+        else:
+            dx = 1
+
+        c2 = enemigos.caja.CajaParte("objetos/caja_parte_2.png", x, y + 50, dx * 200, 6)
+        c1 = enemigos.caja.CajaParte("objetos/caja_parte_1.png", x, y, dx * 150, 4)
+        c2.z = self.enemigo.z
+        c1.z = self.enemigo.z
+        pilas.eventos.se_muere_un_enemigo.emitir(actor=self)
+
+
+    def actualizar(self):
+        pass
+
+    def ha_sido_golpeado(self, otro_actor, fuerte=False):
+        pass
 
 class CaminarAleatoriamente(Comportamiento):
 

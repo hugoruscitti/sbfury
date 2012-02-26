@@ -40,6 +40,9 @@ class Escenario:
 
         self.enemigos = [
             (0, CrearEnemigo(enemigos.Hannia, 200, -200)),
+            (0, CrearEnemigo(enemigos.Caja, 200, -100)),
+            (0, CrearEnemigo(enemigos.Caja, 100, -120)),
+            (0, CrearEnemigo(enemigos.Caja, 0, -140)),
             (0, PausaHastaEliminarEnemigos()),
             (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
             (500, CrearEnemigo(enemigos.Red, 500 + 500, -100)),
