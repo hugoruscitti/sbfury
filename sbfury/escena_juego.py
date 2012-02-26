@@ -70,11 +70,13 @@ class EscenaJuego(Normal):
         texto_continuar.z = -1000
 
     def _crear_barras_de_energia(self):
-        self.energia_shaolin = pilas.actores.Energia(x=-315, y=213, alto=20)
+        self.energia_shaolin = pilas.actores.Energia(x=-280, y=213, alto=20)
+        self.energia_shaolin.cargar_miniatura("shaolin/mini.png")
         self.energia_enemigo = pilas.actores.Energia(x=+315, y=213, alto=20)
 
     def actualizar_energia_enemigo(self, evento):
         self.energia_enemigo.progreso = evento.quien.energia
+        self.energia_enemigo.cargar_miniatura(evento.quien.miniatura)
 
     def actualizar_energia_shaolin(self, evento):
         self.energia_shaolin.progreso = evento.quien.energia

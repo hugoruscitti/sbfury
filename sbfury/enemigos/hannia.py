@@ -21,6 +21,7 @@ class Hannia(red.Red):
                     ]
         self.comportamiento_ai_indice = 0
         self.hacer(estados.IngresarCayendo())
+        self.miniatura = pilas.imagenes.cargar("hannia/mini.png")
 
     def _cargar_animaciones(self):
         cargar = pilas.imagenes.cargar_grilla

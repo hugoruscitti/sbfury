@@ -40,6 +40,7 @@ class Red(enemigo.Enemigo):
         self.comportamiento_ai_indice = 0
 
         self.hacer(estados.IngresarCayendo())
+        self.miniatura = pilas.imagenes.cargar("red/mini.png")
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
