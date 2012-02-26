@@ -17,6 +17,7 @@ class Hannia(red.Red):
                     estados.Parado(segundos=1),
                     estados.CaminarAleatoriamente(segundos=0.5),
                     estados.Parado(segundos=1),
+                    estados.Golpear(segundos=1),
                     estados.CaminaHaciaLineaVerticalDelShaolin(segundos=1),
                     ]
         self.comportamiento_ai_indice = 0
@@ -27,7 +28,7 @@ class Hannia(red.Red):
         cargar = pilas.imagenes.cargar_grilla
         self.animaciones = {
                 'parado': cargar("hannia/parado.png", 1),
-                #'golpear': cargar("red/golpear.png", 3),
+                'golpear': cargar("hannia/golpear.png", 3),
                 'lo_golpean': cargar("hannia/lo_golpean.png", 1),
                 'lo_golpean_fuerte': cargar("hannia/lo_golpean_fuerte.png", 2),
                 'caminar': cargar("hannia/caminar.png", 4),

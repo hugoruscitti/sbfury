@@ -34,6 +34,7 @@ class Red(enemigo.Enemigo):
                     estados.Parado(segundos=1),
                     estados.LanzarEstrella(),
                     estados.CaminarAleatoriamente(segundos=0.5),
+                    estados.Golpear(),
                     estados.Parado(segundos=1),
                     estados.CaminaHaciaLineaVerticalDelShaolin(segundos=1),
                     ]
@@ -44,7 +45,8 @@ class Red(enemigo.Enemigo):
 
     def actualizar(self):
         enemigo.Enemigo.actualizar(self)
-        self.avanzar_animacion(0.15)
+        if self.avanzar_animacion(0.15):
+            self.comportamiento_actual.ha_terminado_animacion()
 
     def pasar_al_siguiente_estado_ai(self):
         # Avanza en la lista de comportamientos como si fuera una lista

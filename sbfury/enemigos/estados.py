@@ -6,6 +6,7 @@
 import pilas
 import random
 import estrella
+import golpe
 
 
 class Comportamiento(pilas.comportamientos.Comportamiento):
@@ -15,9 +16,10 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         self.contador_de_tiempo = 0
 
     def iniciar(self, enemigo):
+        self.contador_de_tiempo = 0
         self.enemigo = enemigo
         self.control = pilas.mundo.control
-        self.golpe = None
+        #self.eliminar_golpe()
 
     def actualizar(self):
         self.contador_de_tiempo += 1
@@ -25,14 +27,18 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
         if self.contador_de_tiempo > self.ticks_totales_para_avanzar_de_estado:
             self.contador_de_tiempo = 0
             self.enemigo.pasar_al_siguiente_estado_ai()
-    
-    #def golpear(self, dx=0, dy=40):
-    #    self.golpe = golpe.Golpe(self.shaolin, self, self.shaolin.enemigos, dx, dy)
 
-    #def eliminar_golpe(self):
-    #    if self.golpe:
-    #        self.golpe.eliminar()
-    #        self.golpe = None
+    
+    def golpear(self, dx=0, dy=100):
+        self.golpe = golpe.Golpe(self.enemigo, [self.enemigo.shaolin], dx, dy)
+
+    def eliminar_golpe(self):
+        if self.golpe:
+            self.golpe.eliminar()
+            self.golpe = None
+
+    def ha_terminado_animacion(self):
+        pass
 
     def ha_golpeado(self, otro_actor):
         pass
@@ -79,9 +85,21 @@ class Golpear(Comportamiento):
     def iniciar(self, enemigo):
         Comportamiento.iniciar(self, enemigo)
         self.enemigo.cambiar_animacion('golpear')
+        self.golpear(dx=30)
 
     def actualizar(self):
-        pass
+        Comportamiento.actualizar(self)
+
+        if self.golpe:
+            shaolin_que_ha_golpeado = self.golpe.verificar_colisiones()
+
+            if shaolin_que_ha_golpeado:
+                shaolin_que_ha_golpeado.ha_sido_golpeado(self, False)
+                self.eliminar_golpe()
+
+    def ha_terminado_animacion(self):
+        self.eliminar_golpe()
+        self.enemigo.pasar_al_siguiente_estado_ai()
 
 class LoGolpean(Comportamiento):
 
