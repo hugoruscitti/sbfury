@@ -32,6 +32,7 @@ class CajaParte(pilas.actores.Actor):
         self.contandor = 0
         self.dy = dy
         self.y_inicial = y
+        self.puede_ser_golpeado = False
         self.centro = ("centro", "abajo")
 
         if dx < 0:

@@ -99,6 +99,7 @@ class CajaExplotando(Comportamiento):
         enemigo.reducir_energia(70)
         self.enemigo.eliminar()
         self.enemigo.sombra.eliminar()
+        self.enemigo.puede_ser_golpeado = False
         x, y = self.enemigo.x, self.enemigo.y
 
         if self.enemigo.espejado:
