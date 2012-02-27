@@ -58,16 +58,21 @@ class EscenaJuego(Normal):
         EscenaJuego()
 
     def _crear_texto_game_over(self):
-        texto_game_over = pilas.actores.Texto("Game Over", magnitud=40)
-        texto_game_over.z = -1000
-        texto_game_over.escala = 0.1
-        texto_game_over.escala = [1], 0.5
+        titulo = "Game Over"
+        subtitulo = "Pulse escape para reiniciar"
+        self._crear_mensaje_de_texto(subtitulo, titulo)
 
-        texto_continuar = pilas.actores.Texto("Pulse escape para reiniciar")
-        texto_continuar.y = -60
-        texto_continuar.transparencia = 100
-        texto_continuar.transparencia = [0]
-        texto_continuar.z = -1000
+    def _crear_mensaje_de_texto(self, subtitulo, titulo):
+        texto_titulo = pilas.actores.Texto(titulo, magnitud=40)
+        texto_titulo.z = -1000
+        texto_titulo.escala = 0.1
+        texto_titulo.escala = [1], 0.5
+
+        texto_subtitulo = pilas.actores.Texto(subtitulo)
+        texto_subtitulo.y = -60
+        texto_subtitulo.transparencia = 100
+        texto_subtitulo.transparencia = [0]
+        texto_subtitulo.z = -1000
 
     def _crear_barras_de_energia(self):
         self.energia_shaolin = pilas.actores.Energia(x=-280, y=213, alto=20)
@@ -80,3 +85,13 @@ class EscenaJuego(Normal):
 
     def actualizar_energia_shaolin(self, evento):
         self.energia_shaolin.progreso = evento.quien.energia
+
+    def nivel_terminado(self):
+        titulo = "Nivel Completado"
+        subtitulo = "---"
+        self._crear_mensaje_de_texto(subtitulo, titulo)
+        pilas.mundo.agregar_tarea(3, self._pasar_al_siguiente_nivel)
+
+    def _pasar_al_siguiente_nivel(self):
+        import sys
+        sys.exit(1)

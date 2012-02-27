@@ -5,4 +5,4 @@
 # Web: www.losersjuegos.com.ar
 
 # Muestra los golpes como actores visibles.
-DEPURACION = True
+DEPURACION = False

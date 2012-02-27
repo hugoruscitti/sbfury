@@ -44,6 +44,7 @@ class Escenario:
             (0, CrearEnemigo(enemigos.Caja, 100, -120)),
             (0, CrearEnemigo(enemigos.Caja, 0, -140)),
             (0, PausaHastaEliminarEnemigos()),
+            #(1, PasarDeNivel()),
             (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
             (500, CrearEnemigo(enemigos.Red, 500 + 500, -100)),
             (500, CrearEnemigo(enemigos.Red, 500 + 500, -200)),
@@ -132,3 +133,10 @@ class PausaHastaEliminarEnemigos(Item):
 
     def ejecutar(self, escenario):
         escenario.bloquear_camara()
+
+class PasarDeNivel(Item):
+    """Cambia el estado del escenario para indicar que se
+    pasa al siguiente nivel."""
+
+    def ejecutar(self, escenario):
+        escenario.escena_juego.nivel_terminado()
