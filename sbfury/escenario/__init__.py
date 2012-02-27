@@ -55,11 +55,21 @@ class Escenario:
         pilas.mundo.tareas.siempre(0.1, self.mover_camara)
 
     def mover_camara(self):
+
         if not self._esta_bloqueada():
             camara = pilas.mundo.camara
 
             if camara.x + 100 < self.shaolin.x:
-                camara.x = [self.shaolin.x - 100], 0.1
+                ancho_maximo = self.capas[3].ancho
+                ancho_pantalla = 853
+                limite = ancho_maximo - ancho_pantalla
+
+                to_x = self.shaolin.x - 100
+
+                if to_x > limite:
+                    to_x = limite
+
+                camara.x = [to_x], 0.1
 
             self._procesar_creacion_de_enemigos(camara.x)
 
@@ -85,8 +95,11 @@ class Escenario:
 
     def _crear_capas(self):
         fondo = pilas.fondos.Desplazamiento()
-        fondo.agregar(self.capas[0], (1793)/(5300.0 + 640))
-        fondo.agregar(self.capas[1], 0.5567)
+        ancho = 853 # de la pantalla
+        maximo_scroll = float(self.capas[3].ancho - ancho)
+
+        fondo.agregar(self.capas[0], (self.capas[0].ancho - ancho) / maximo_scroll)
+        fondo.agregar(self.capas[1], (self.capas[1].ancho - ancho) / maximo_scroll)
         fondo.agregar(self.capas[2], 1)
         fondo.agregar(self.capas[3], 1)
 
