@@ -22,7 +22,7 @@ class Comportamiento(Comportamiento):
 
     def iniciar(self, shaolin):
         self.shaolin = shaolin
-        self.control = pilas.mundo.control
+        self.control = shaolin.control
         self.golpe = None
 
     def pulsa_saltar(self):
@@ -85,6 +85,10 @@ class Caminar(Comportamiento):
 
     def actualizar(self):
         x, y = 0, 0
+
+        if self.control.corre:
+            self.shaolin.hacer(Correr())
+            return
 
         if self.control.izquierda:
             x = -1
@@ -384,3 +388,84 @@ class Morirse(QuedarseEnElSuelo):
 
     def actualizar(self):
         pass
+
+class Correr(Comportamiento):
+
+    def iniciar(self, shaolin):
+        Comportamiento.iniciar(self, shaolin)
+        self.shaolin.cambiar_animacion('corre')
+
+    def actualizar(self):
+        x, y = 0, 0
+
+        if self.control.izquierda:
+            x = -3
+            self.shaolin.espejado = True
+        elif self.control.derecha:
+            x = 3
+            self.shaolin.espejado = False
+
+        if self.control.arriba:
+            y = 2
+        elif self.control.abajo:
+            y = -2
+
+        if x == y == 0:
+            self.shaolin.hacer(Parado())
+        else:
+            self.shaolin.mover(x, y)
+
+        self.shaolin.avanzar_animacion(0.3)
+
+    def pulsa_golpear(self):
+        self.shaolin.hacer(GolpearCorriendo())
+
+    def pulsa_saltar(self):
+        if self.control.izquierda:
+            direccion = -2
+        elif self.control.derecha:
+            direccion = 2
+        else:
+            direccion = 0
+
+        self.shaolin.hacer(SaltarCaminando(direccion))
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self._pasar_a_estado_golpeado()
+
+
+class GolpearCorriendo(Golpear):
+
+    def iniciar(self, shaolin):
+        Golpear.iniciar(self, shaolin)
+
+        self.shaolin.cambiar_animacion('golpea_corriendo')
+        self.shaolin.reproducir_sonido('golpe')
+        self.golpear(dy=90)
+
+        if self.shaolin.espejado:
+            self.dx = -3
+        else:
+            self.dx = +3
+
+    def actualizar(self):
+        if self.shaolin.avanzar_animacion(0.025):
+            self.shaolin.hacer(Parado())
+            self.eliminar_golpe()
+        else:
+            self.dx /= 1.05
+            self.shaolin.mover(self.dx, 0)
+
+            if self.golpe:
+                enemigo = self.golpe.verificar_colisiones()
+
+                if enemigo:
+                    self.eliminar_golpe()
+                    ataque_fuerte = True
+                    enemigo.ha_sido_golpeado(self.shaolin, fuerte=ataque_fuerte)
+                    Golpear.ha_golpeado = True
+                else:
+                    Golpear.ha_golpeado =False
+
+    def ha_sido_golpeado(self, otro_actor, fuerte):
+        self._pasar_a_estado_golpeado()

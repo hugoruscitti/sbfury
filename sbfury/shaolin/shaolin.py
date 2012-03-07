@@ -3,9 +3,11 @@
 #
 # Copyright: Hugo Ruscitti
 # Web: www.losersjuegos.com.ar
+
 import pilas
 import estados
 import personaje
+import control
 
 class Shaolin(personaje.Personaje):
     """El protagonista del juego."""
@@ -13,6 +15,7 @@ class Shaolin(personaje.Personaje):
     def __init__(self, enemigos):
         self._cargar_animaciones()
         personaje.Personaje.__init__(self)
+        self.control = control.Control()
         self.hacer(estados.Parado())
         pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
         self.cargar_sonidos()
@@ -29,6 +32,7 @@ class Shaolin(personaje.Personaje):
         self.animaciones = {
             "parado": cargar("shaolin/parado.png", 4),
             "camina": cargar("shaolin/camina.png", 4),
+            "corre": cargar("shaolin/corre.png", 4),
             "ataca0": cargar("shaolin/ataca0.png", 2),
             "ataca1": cargar("shaolin/ataca1.png", 2),
             "ataca2": cargar("shaolin/ataca0.png", 2),
@@ -36,6 +40,7 @@ class Shaolin(personaje.Personaje):
             "ataca4": cargar("shaolin/ataca4.png", 4),
             "salta": cargar("shaolin/salta.png", 3),
             "levantandose": cargar("shaolin/levantandose.png", 1),
+            "golpea_corriendo": cargar("shaolin/golpea_corriendo.png", 1),
             "ataque_aereo": cargar("shaolin/ataque_aereo.png", 2),
             "es_golpeado": cargar("shaolin/es_golpeado.png", 2),
             "es_golpeado_fuerte": cargar("shaolin/es_golpeado_fuerte.png", 2),
