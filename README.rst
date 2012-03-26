@@ -3,6 +3,8 @@ Shaolin's Blind Fury
 
 Este videojuego es un videojuego de peleas callejeras.
 
+.. image:: sbfury/doc/imagenes/preview.jpg
+
 Shaolin es el nombre de protagonistra del juego, un estudiante
 de artes marciales que debe luchar contra todo
 tipo de enemigos para recuperar su preciado par de ojos
@@ -21,9 +23,9 @@ el comando::
 ¿Cómo jugar?
 ------------
 
-A: para saltar
-D: para golpear
-Flechas: para mover al personaje.
+- A: para saltar
+- D: para golpear
+- Flechas: para mover al personaje.
 
 Información para desarrolladores
 --------------------------------
@@ -31,8 +33,8 @@ Información para desarrolladores
 Shaolin está siendo realizado por Hugo Ruscitti, del grupo
 losersjuegos, usando el motor de videojuegos "pilas-engine":
 
-    http://www.losersjuegos.com.ar
-    http://www.pilas-engine.com.ar
+- http://www.losersjuegos.com.ar
+- http://www.pilas-engine.com.ar
 
 Si quieres saber cómo funciona el juego internamente, te
 recomiendo ver el archivo ``sbfury/doc/manual_para_desarrolladores.rst``,
