@@ -3,7 +3,7 @@ Shaolin's Blind Fury
 
 Este videojuego es un videojuego de peleas callejeras.
 
-.. image:: sbfury/doc/imagenes/preview.jpg
+.. image:: https://github.com/hugoruscitti/sbfury/raw/master/sbfury/doc/imagenes/preview.jpg
 
 Shaolin es el nombre de protagonistra del juego, un estudiante
 de artes marciales que debe luchar contra todo
