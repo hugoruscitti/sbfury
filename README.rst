@@ -30,7 +30,7 @@ el comando::
 Información para desarrolladores
 --------------------------------
 
-Shaolin está siendo realizado por Hugo Ruscitti, del grupo
+Shaolin está siendo realizado por Hugo Ruscitti y Walter Velazquez, del grupo
 losersjuegos, usando el motor de videojuegos "pilas-engine":
 
 - http://www.losersjuegos.com.ar
