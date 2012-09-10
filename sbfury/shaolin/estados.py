@@ -15,7 +15,7 @@ class Comportamiento(Comportamiento):
     Esta clase es abstracta, así que solo estaría aquí para ser
     superclase de toda acción.
 
-    También está basada en el sistema de comportamientos de pilas, 
+    También está basada en el sistema de comportamientos de pilas,
     te recomiendo ver el actor ``cooperativista`` para un ejemplo
     mas sencillo de implementación de comportamientos.
     """
@@ -44,7 +44,7 @@ class Comportamiento(Comportamiento):
 
     def ha_sido_golpeado(self, otro_actor, fuerte):
         pass
-    
+
     def _pasar_a_estado_golpeado(self):
         self.eliminar_golpe()
 
@@ -295,7 +295,7 @@ class LoGolpean(Comportamiento):
             self.shaolin.hacer(Parado())
         else:
             self.contador -= 1
-        
+
     def ha_sido_golpeado(self, otro_actor, fuerte=False):
         pass
 

@@ -58,7 +58,7 @@ class Shaolin(personaje.Personaje):
             'golpe': pilas.sonidos.cargar("sonidos/golpe.wav"),
             #'musica': pilas.sonidos.cargar("musica/menu.wav"),
         }
-        
+
     def reproducir_sonido(self, nombre):
         self.sonidos[nombre].reproducir()
 

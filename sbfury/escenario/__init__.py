@@ -39,16 +39,11 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
-            (0, CrearEnemigo(enemigos.Hannia, 200, -200)),
-            (0, CrearEnemigo(enemigos.Caja, 200, -100)),
             (0, CrearEnemigo(enemigos.Caja, 100, -120)),
             (0, CrearEnemigo(enemigos.Caja, 0, -140)),
-            (0, PausaHastaEliminarEnemigos()),
+            (0, CrearEnemigo(enemigos.Hannia, 500, -140)),
             #(1, PasarDeNivel()),
             (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
-            (500, CrearEnemigo(enemigos.Red, 500 + 500, -100)),
-            (500, CrearEnemigo(enemigos.Red, 500 + 500, -200)),
-            (800, CrearEnemigo(enemigos.Red, 800 + 500, -200)),
             (800, CrearEnemigo(enemigos.Red, 880, -200)),
         ]
 
