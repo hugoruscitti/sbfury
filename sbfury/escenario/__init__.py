@@ -7,6 +7,28 @@
 import pilas
 import enemigos
 
+from PyQt4 import QtCore
+
+
+class Layer(pilas.actores.Actor):
+    pass
+
+
+class Layer3D(Layer):
+
+    def dibujar(self, painter):
+        painter.save()
+
+        transform = painter.transform()
+        transform.translate(0, 116)
+        transform.scale(0.780, 1)
+        transform.rotate(70, QtCore.Qt.XAxis)
+        painter.setTransform(transform)
+
+        self.imagen.dibujar(painter, self.x, 0, 0, 0, 1, 1, 0, 0)
+        painter.restore()
+
+
 class Escenario:
     """Controla la apariencia del escenario y el desplazamiengo de cámara.
 
@@ -24,8 +46,12 @@ class Escenario:
                  ]
         self.capas = []
 
-        for imagen, x, y, z in fondos:
-            capa = pilas.actores.Actor(imagen)
+        for index, (imagen, x, y, z) in enumerate(fondos):
+            if index == 3:
+                capa = Layer3D(imagen)
+            else:
+                capa = Layer(imagen)
+
             capa.centro = ("izquierda", "arriba")
             capa.x = x
             capa.y = y
