@@ -29,7 +29,7 @@ class Comportamiento(pilas.comportamientos.Comportamiento):
             self.contador_de_tiempo = 0
             self.enemigo.pasar_al_siguiente_estado_ai()
 
-    
+
     def golpear(self, dx=0, dy=100):
         self.golpe = golpe.Golpe(self.enemigo, [self.enemigo.shaolin], dx, dy)
 
@@ -133,7 +133,7 @@ class CaminarAleatoriamente(Comportamiento):
         Comportamiento.actualizar(self)
         self.enemigo.mover(self.dx, self.dy)
         self.enemigo.mirar_al_shaolin()
-        
+
 
 class Golpear(Comportamiento):
 
@@ -166,7 +166,7 @@ class LoGolpean(Comportamiento):
         self.contador = 20
 
         # emite evento para avisar que ha sido golpeado
-        enemigo.reducir_energia(10)
+        enemigo.reducir_energia(15)
 
     def actualizar(self):
         x = self.x_inicial
@@ -182,7 +182,7 @@ class LoGolpean(Comportamiento):
             self.enemigo.cargar_primer_estado_ai()
         else:
             self.contador -= 1
-        
+
     def ha_sido_golpeado(self, otro_actor, fuerte=False):
         pass
 
@@ -202,7 +202,7 @@ class LoGolpeanFuerte(LoGolpean):
             self.velocidad_horizontal = -1.55
 
         # emite evento para avisar que ha sido golpeado
-        enemigo.reducir_energia(20)
+        enemigo.reducir_energia(30)
 
     def actualizar(self):
         self.enemigo.altura_del_salto += self.velocidad_inicial
