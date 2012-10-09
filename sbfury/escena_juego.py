@@ -10,11 +10,11 @@ import escenario
 
 
 
-class EscenaJuego(pilas.escena.escena_base.EscenaBase):
+class EscenaJuego(pilas.escena.Base):
     """Representa la escena de juego en donde el shaolin va luchando."""
 
     def __init__(self):
-        pilas.escena.escena_base.EscenaBase.__init__(self)
+        pilas.escena.Base.__init__(self)
 
 
     def iniciar(self):
@@ -28,16 +28,16 @@ class EscenaJuego(pilas.escena.escena_base.EscenaBase):
         self._crear_escenario()
 
     def _crear_eventos_personalizados(self):
-        pilas.eventos.se_golpea_a_enemigo = pilas.eventos.Evento("se_golpea_enemigo")
+        pilas.eventos.se_golpea_a_enemigo = pilas.evento.Evento("se_golpea_enemigo")
         pilas.eventos.se_golpea_a_enemigo.conectar(self.actualizar_energia_enemigo)
 
-        pilas.eventos.se_golpea_a_shaolin = pilas.eventos.Evento("se_golpea_shaolin")
+        pilas.eventos.se_golpea_a_shaolin = pilas.evento.Evento("se_golpea_shaolin")
         pilas.eventos.se_golpea_a_shaolin.conectar(self.actualizar_energia_shaolin)
 
-        pilas.eventos.se_muere_un_enemigo = pilas.eventos.Evento("se_muere_un_enemigo")
+        pilas.eventos.se_muere_un_enemigo = pilas.evento.Evento("se_muere_un_enemigo")
         pilas.eventos.se_muere_un_enemigo.conectar(self._cuando_muere_un_enemigo)
 
-        pilas.eventos.se_muere_el_shaolin = pilas.eventos.Evento("se_muere_el_shaolin")
+        pilas.eventos.se_muere_el_shaolin = pilas.evento.Evento("se_muere_el_shaolin")
         pilas.eventos.se_muere_el_shaolin.conectar(self._cuando_muere_el_shaolin)
 
     def _crear_escenario(self):
