@@ -12,6 +12,6 @@ pilas.iniciar_con_lanzador(ancho=853, alto=480, titulo=titulo)
 #pilas.iniciar(ancho=853, alto=480, usar_motor='qtgl', titulo=titulo)
 
 # Cargando la nueva escena.
-escena_juego.EscenaJuego()
+pilas.cambiar_escena(escena_juego.EscenaJuego())
 
 pilas.ejecutar()

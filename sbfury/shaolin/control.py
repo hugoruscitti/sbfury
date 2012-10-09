@@ -9,8 +9,8 @@ import time
 
 class Control(pilas.control.Control):
 
-    def __init__(self):
-        pilas.control.Control.__init__(self)
+    def __init__(self, escena):
+        pilas.control.Control.__init__(self, escena)
         self.historico = [' '] * 3
         self.corre = False
 

@@ -8,19 +8,21 @@ import pilas
 import shaolin
 import escenario
 
-from pilas.escenas import Normal
 
 
-class EscenaJuego(Normal):
+class EscenaJuego(pilas.escena.escena_base.EscenaBase):
     """Representa la escena de juego en donde el shaolin va luchando."""
 
     def __init__(self):
-        Normal.__init__(self)
+        pilas.escena.escena_base.EscenaBase.__init__(self)
+
+
+    def iniciar(self):
         self.lista_enemigos = []
         self.cantidad_de_enemigos = 0
 
         self._crear_barras_de_energia()
-        self.shaolin = shaolin.Shaolin(self.lista_enemigos)
+        self.shaolin = shaolin.Shaolin(self.lista_enemigos, self)
 
         self._crear_eventos_personalizados()
         self._crear_escenario()

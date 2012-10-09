@@ -12,10 +12,10 @@ import control
 class Shaolin(personaje.Personaje):
     """El protagonista del juego."""
 
-    def __init__(self, enemigos):
+    def __init__(self, enemigos, escena):
         self._cargar_animaciones()
         personaje.Personaje.__init__(self)
-        self.control = control.Control()
+        self.control = control.Control(escena)
         self.hacer(estados.Parado())
         pilas.eventos.pulsa_tecla.conectar(self.cuando_pulsa_una_tecla)
         self.cargar_sonidos()
