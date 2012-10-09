@@ -38,7 +38,7 @@ class Personaje(pilas.actores.Actor):
 
         # aplica un limite horizontal para que el personaje
         # no pueda salir de la zona visible de la camara
-        centro = pilas.mundo.camara.x
+        centro = pilas.escena_actual().camara.x
         self.x = self._aplicar_limites(self.x, centro - 430, centro + 430)
 
     def _aplicar_limites(self, valor, minimo, maximo):
@@ -64,7 +64,7 @@ class Personaje(pilas.actores.Actor):
             return self.imagen.avanzar()
 
     def definir_cuadro(self, indice):
-        self.imagen.definir_cuadro(indice)                                                       
+        self.imagen.definir_cuadro(indice)
         self.tmp_velocidad_animacion = 0
 
     def cambiar_animacion(self, nombre):

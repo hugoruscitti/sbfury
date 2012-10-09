@@ -16,13 +16,21 @@ class Layer(pilas.actores.Actor):
 
 class Layer3D(Layer):
 
+    def __init__(self, *k):
+        Layer.__init__(self, *k)
+        self._escala = 0.780
+        self._escala_y = 1
+        self._angulo = 70
+        self._mi_y = 115
+
     def dibujar(self, painter):
         painter.save()
 
         transform = painter.transform()
-        transform.translate(0, 116)
-        transform.scale(0.780, 1)
-        transform.rotate(70, QtCore.Qt.XAxis)
+        transform.translate(73, self._mi_y)
+        transform.scale(self._escala, self._escala_y)
+        transform.rotate(self._angulo, QtCore.Qt.XAxis)
+        transform.shear(-0.3, 0)
         painter.setTransform(transform)
 
         self.imagen.dibujar(painter, self.x, 0, 0, 0, 1, 1, 0, 0)
@@ -65,12 +73,12 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
-            (0, CrearEnemigo(enemigos.Caja, 100, -120)),
-            (0, CrearEnemigo(enemigos.Caja, 0, -140)),
-            (0, CrearEnemigo(enemigos.Hannia, 500, -140)),
+            #(0, CrearEnemigo(enemigos.Caja, 100, -120)),
+            #(0, CrearEnemigo(enemigos.Caja, 0, -140)),
+            #(0, CrearEnemigo(enemigos.Hannia, 500, -140)),
             #(1, PasarDeNivel()),
-            (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
-            (800, CrearEnemigo(enemigos.Red, 880, -200)),
+            #(500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
+            #(800, CrearEnemigo(enemigos.Red, 880, -200)),
         ]
 
     def cargar_temporizador(self):
@@ -79,7 +87,7 @@ class Escenario:
     def mover_camara(self):
 
         if not self._esta_bloqueada():
-            camara = pilas.mundo.camara
+            camara = pilas.escena_actual().camara
 
             if camara.x + 100 < self.shaolin.x:
                 ancho_maximo = self.capas[3].ancho
