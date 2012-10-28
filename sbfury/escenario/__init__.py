@@ -73,16 +73,16 @@ class Escenario:
         self._crear_capas()
 
         self.enemigos = [
-            #(0, CrearEnemigo(enemigos.Caja, 100, -120)),
-            #(0, CrearEnemigo(enemigos.Caja, 0, -140)),
-            #(0, CrearEnemigo(enemigos.Hannia, 500, -140)),
+            (0, CrearEnemigo(enemigos.Caja, 100, -120)),
+            (0, CrearEnemigo(enemigos.Caja, 0, -140)),
+            (0, CrearEnemigo(enemigos.Hannia, 500, -140)),
             #(1, PasarDeNivel()),
-            #(500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
-            #(800, CrearEnemigo(enemigos.Red, 880, -200)),
+            (500, CrearEnemigo(enemigos.Red, 500 - 500, -150)),
+            (800, CrearEnemigo(enemigos.Red, 880, -200)),
         ]
 
     def cargar_temporizador(self):
-        pilas.mundo.tareas.siempre(0.1, self.mover_camara)
+        pilas.mundo.agregar_tarea_siempre(0.1, self.mover_camara)
 
     def mover_camara(self):
 

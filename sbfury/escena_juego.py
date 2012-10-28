@@ -10,11 +10,8 @@ import escenario
 
 
 
-class EscenaJuego(pilas.escena.escena_base.EscenaBase):
+class EscenaJuego(pilas.escena.Normal):
     """Representa la escena de juego en donde el shaolin va luchando."""
-
-    def __init__(self):
-        pilas.escena.escena_base.EscenaBase.__init__(self)
 
 
     def iniciar(self):
@@ -92,7 +89,7 @@ class EscenaJuego(pilas.escena.escena_base.EscenaBase):
         titulo = "Nivel Completado"
         subtitulo = "---"
         self._crear_mensaje_de_texto(subtitulo, titulo)
-        pilas.mundo.agregar_tarea(3, self._pasar_al_siguiente_nivel)
+        pilas.utils.agregar_tarea(3, self._pasar_al_siguiente_nivel)
 
     def _pasar_al_siguiente_nivel(self):
         import sys
