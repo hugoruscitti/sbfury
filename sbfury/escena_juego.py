@@ -16,7 +16,6 @@ class EscenaJuego(pilas.escena.Base):
     def __init__(self):
         pilas.escena.Base.__init__(self)
 
-
     def iniciar(self):
         self.lista_enemigos = []
         self.cantidad_de_enemigos = 0
@@ -92,7 +91,7 @@ class EscenaJuego(pilas.escena.Base):
         titulo = "Nivel Completado"
         subtitulo = "---"
         self._crear_mensaje_de_texto(subtitulo, titulo)
-        pilas.mundo.agregar_tarea(3, self._pasar_al_siguiente_nivel)
+        pilas.utils.agregar_tarea(3, self._pasar_al_siguiente_nivel)
 
     def _pasar_al_siguiente_nivel(self):
         import sys
